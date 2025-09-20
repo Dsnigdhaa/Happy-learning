@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Manage Users</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <script defer src="../assets/js/dashboard.js"></script>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>LMS Admin</h2>
+    <ul>
+      <li><a href="dashboard.html">Dashboard</a></li>
+      <li><a href="users.html" class="active">Users</a></li>
+      <li><a href="courses.html">Courses</a></li>
+      <li><a href="materials.html">Materials</a></li>
+      <li><a href="videos.html">Recorded Classes</a></li>
+      <li><a href="live.html">Live Classes</a></li>
+      <li><a href="assignments.html">Assignments</a></li>
+      <li><a href="reports.html">Reports</a></li>
+      <li><a href="notifications.html">Notifications</a></li>
+      <li><a href="settings.html">Settings</a></li>
+      <li><a href="about.html">About</a></li>
+      <li><a href="contact.html">Contact</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header>
+      <h1>Manage Users</h1>
+      <div class="profile">
+        <input type="text" id="searchInput" placeholder="Search Users...">
+        <button onclick="openModal('addStudentModal')">+ Student</button>
+        <button onclick="openModal('addTrainerModal')">+ Trainer</button>
+      </div>
+    </header>
+
+    <!-- Students -->
+    <div class="table-container">
+      <h3>Students</h3>
+      <table id="studentsTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Course</th>
+            <th>Status</th>
+            <th>Enrollment Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Trainers -->
+    <div class="table-container">
+      <h3>Trainers</h3>
+      <table id="trainersTable">
+        <thead>
+          <tr>
+            <th>Name</th>
+            <th>Email</th>
+            <th>Subject</th>
+            <th>Status</th>
+            <th>Hire Date</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          <!-- Rows populated dynamically -->
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- MODALS -->
+  <div id="addStudentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('addStudentModal')">&times;</span>
+      <h3>Add Student</h3>
+      <input type="text" id="studentName" placeholder="Student Name">
+      <input type="email" id="studentEmail" placeholder="Student Email">
+      <input type="text" id="studentCourse" placeholder="Course">
+      <input type="date" id="studentDate" placeholder="Enrollment Date">
+      <select id="studentStatus">
+        <option value="Active">Active</option>
+        <option value="Inactive">Inactive</option>
+      </select>
+      <button onclick="addStudent()">Add</button>
+    </div>
+  </div>
+
+  <div id="addTrainerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('addTrainerModal')">&times;</span>
+      <h3>Add Trainer</h3>
+      <input type="text" id="trainerName" placeholder="Trainer Name">
+      <input type="email" id="trainerEmail" placeholder="Trainer Email">
+      <input type="text" id="trainerSubject" placeholder="Subject">
+      <input type="date" id="trainerDate" placeholder="Hire Date">
+      <select id="trainerStatus">
+        <option value="Active">Active</option>
+        <option value="On Leave">On Leave</option>
+      </select>
+      <button onclick="addTrainer()">Add</button>
+    </div>
+  </div>
+
+</body>
+</html>

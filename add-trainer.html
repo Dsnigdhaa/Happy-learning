@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Add Trainer - Admin</title>
+  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body class="admin">
+  <!-- Sidebar -->
+  <div class="sidebar">
+    <h2>Admin Panel</h2>
+    <a href="dashboard.html"> <i class="fas fa-home"></i> Dashboard</a>
+    <a href="users.html"> <i class="fas fa-users"></i> Users</a>
+    <a href="students.html"> <i class="fas fa-user-graduate"></i> Students</a>
+    <a href="trainers.html"> <i class="fas fa-chalkboard-teacher"></i> Trainers</a>
+    <a href="add-trainer.html" class="active"> <i class="fas fa-user-plus"></i> Add Trainer</a>
+    <a href="course-management.html"> <i class="fas fa-book"></i> Courses</a>
+    <a href="materials.html"> <i class="fas fa-folder-open"></i> Materials</a>
+    <a href="reports.html"> <i class="fas fa-chart-line"></i> Reports</a>
+    <a href="../index.html"> <i class="fas fa-sign-out-alt"></i> Logout</a>
+  </div>
+
+  <!-- Main Content -->
+  <div class="main-content">
+    <header>
+      <div class="logo">➕ Add Trainer</div>
+      <div class="user-menu">
+        <img src="../assets/images/avatar.png" alt="Admin Avatar" />
+        <span>Admin</span>
+      </div>
+    </header>
+
+    <div class="content-area" style="max-width: 600px; margin: 40px auto;">
+      <form id="addTrainerForm">
+        <div class="form-row">
+          <label for="trainerName">Name</label>
+          <input type="text" id="trainerName" name="trainerName" placeholder="Enter trainer name" required />
+        </div>
+        <div class="form-row">
+          <label for="trainerEmail">Email</label>
+          <input type="email" id="trainerEmail" name="trainerEmail" placeholder="Enter trainer email" required />
+        </div>
+        <div class="form-row">
+          <label for="trainerCourses">Courses</label>
+          <input type="text" id="trainerCourses" name="trainerCourses" placeholder="Enter courses (comma separated)" />
+        </div>
+        <div class="form-row">
+          <label for="trainerStatus">Status</label>
+          <select id="trainerStatus" name="trainerStatus" required>
+            <option value="">Select status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="btn-primary">Add Trainer</button>
+          <button type="reset" class="btn-secondary">Reset</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+  <script>
+    document.getElementById('addTrainerForm').addEventListener('submit', function(e) {
+      e.preventDefault();
+      alert('Trainer added successfully!');
+      this.reset();
+    });
+  </script>
+</body>
+</html>
