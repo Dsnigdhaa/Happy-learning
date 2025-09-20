@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Reset Password</title>
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<div class="auth-container">
+  <img src="https://res.cloudinary.com/dh4qek1ty/image/upload/v1758123461/image_1_fphh9f.png" alt="LMS Logo">
+  <h2>Reset Password</h2>
+  
+  <form onsubmit="return resetPassword(event)">
+    <div class="input-group">
+      <label for="reset-email">Email</label>
+      <input type="email" id="reset-email" placeholder="Enter your registered email" required>
+    </div>
+    <button type="submit" class="btn">Send Reset Link</button>
+  </form>
+
+  <div class="extra-links">
+    <p><a href="login.html">Back to Login</a></p>
+  </div>
+</div>
+
+<script>
+function resetPassword(event) {
+  event.preventDefault();
+  const email = document.getElementById('reset-email').value;
+  alert("Password reset link sent to: " + email);
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LMS Admin Register</title>
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<div class="auth-container">
+  <img src="https://res.cloudinary.com/dh4qek1ty/image/upload/v1758123461/image_1_fphh9f.png" alt="LMS Logo">
+  <h2>Create Admin Account</h2>
+  
+  <form onsubmit="return register(event)">
+    <div class="input-group">
+      <label for="name">Full Name</label>
+      <input type="text" id="name" placeholder="Enter full name" required>
+    </div>
+    <div class="input-group">
+      <label for="email">Email</label>
+      <input type="email" id="email" placeholder="Enter email" required>
+    </div>
+    <div class="input-group">
+      <label for="new-username">Username</label>
+      <input type="text" id="new-username" placeholder="Choose a username" required>
+    </div>
+    <div class="input-group">
+      <label for="new-password">Password</label>
+      <input type="password" id="new-password" placeholder="Choose a password" required>
+    </div>
+    <button type="submit" class="btn">Register</button>
+  </form>
+
+  <div class="extra-links">
+    <p>Already have an account? <a href="login.html">Login</a></p>
+  </div>
+</div>
+
+<script>
+function register(event) {
+  event.preventDefault();
+  alert("Registration Successful! You can now login.");
+  window.location.href = "login.html";
+}
+</script>
+
+</body>
+</html>

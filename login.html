@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LMS Admin Login</title>
+  <link rel="stylesheet" href="assets/css/auth.css">
+</head>
+<body>
+
+<div class="auth-container">
+  <img src="https://res.cloudinary.com/dh4qek1ty/image/upload/v1758123461/image_1_fphh9f.png" alt="LMS Logo">
+  <h2>Admin Login</h2>
+  
+  <form onsubmit="return login(event)">
+    <div class="input-group">
+      <label for="username">Username</label>
+      <input type="text" id="username" placeholder="Enter username" required>
+    </div>
+    <div class="input-group">
+      <label for="password">Password</label>
+      <input type="password" id="password" placeholder="Enter password" required>
+    </div>
+    <button type="submit" class="btn">Login</button>
+  </form>
+
+  <div class="extra-links">
+    <p><a href="reset.html">Forgot Password?</a></p>
+    <p>New here? <a href="register.html">Register</a></p>
+  </div>
+</div>
+
+<script>
+function login(event) {
+  event.preventDefault();
+  const user = document.getElementById('username').value;
+  const pass = document.getElementById('password').value;
+
+  // Simple demo check
+  if(user === "admin" && pass === "admin123"){
+    alert("Login Successful!");
+    window.location.href = "admin/dashboard.html";
+  } else {
+    alert("Invalid Username or Password");
+  }
+}
+</script>
+
+</body>
+</html>
