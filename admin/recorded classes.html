@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Recorded Classes</title>
+  <link rel="stylesheet" href="../assets/css/admin.css">
+  <script defer src="../assets/js/dashboard.js"></script>
+</head>
+<body>
+  <canvas id="bgCanvas"></canvas>
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Happy Learning</h2>
+    <img src="../assets/images/logo.png" alt="Happy Learning Logo" class="sidebar-logo">
+    <ul>
+      <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+      <li><a href="courses.html"><i class="fas fa-book"></i> Course management</a></li>
+      <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
+      <li><a href="recorded classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
+      <li><a href="live classes.html"><i class="fas fa-video"></i> live Classes</a></li>
+      <li><a href="assignments.html"><i class="fas fa-file-alt"></i> Assignments</a></li>
+      <li><a href="reports.html"><i class="fas fa-chart-line"></i> Reports</a></li>
+      <li><a href="notifications.html"><i class="fas fa-bell"></i> Notifications</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+      <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
+      <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
+      <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
+    </ul>
+  </aside>
+
+  <!-- MAIN -->
+  <main class="main-content">
+    <header>
+      <h1>Recorded Classes</h1>
+      <div class="profile">
+        <input type="text" placeholder="Search Videos...">
+        <button onclick="openModal('addVideoModal')">+ Video</button>
+      </div>
+    </header>
+
+    <div class="table-container">
+      <h3>Recorded Classes</h3>
+      <table>
+        <thead>
+          <tr>
+            <th>Title</th>
+            <th>Course</th>
+            <th>Link</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody id="recordedClassesTableBody">
+          <tr>
+            <td>Algebra Introduction</td>
+            <td>Math Basics</td>
+            <td><a href="https://www.youtube.com/embed/YompsDlEdtc" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+          <tr>
+            <td>Photosynthesis</td>
+            <td>Biology Fundamentals</td>
+            <td><a href="https://www.youtube.com/embed/juxLuo-sH6I" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+          <tr>
+            <td>Physics Lecture</td>
+            <td>Physics Advanced</td>
+            <td><a href="https://www.youtube.com/embed/example" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+          <tr>
+            <td>Chemistry Session</td>
+            <td>Chemistry Intro</td>
+            <td><a href="https://www.youtube.com/embed/example" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+          <tr>
+            <td>CS Workshop</td>
+            <td>Computer Science</td>
+            <td><a href="https://www.youtube.com/embed/example" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+          <tr>
+            <td>History Timeline</td>
+            <td>History Basics</td>
+            <td><a href="https://www.youtube.com/embed/example" target="_blank">Watch</a></td>
+            <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </main>
+
+  <!-- MODAL -->
+  <div id="addVideoModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('addVideoModal')">&times;</span>
+      <h3>Add Recorded Class</h3>
+      <input type="text" placeholder="Video Title">
+      <input type="url" placeholder="YouTube URL">
+      <button>Add</button>
+    </div>
+  </div>
+
+  <script>
+    function deleteRow(button) {
+      const row = button.parentElement.parentElement;
+      row.remove();
+    }
+  </script>
+</body>
+</html>

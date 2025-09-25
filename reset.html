@@ -3,36 +3,36 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Reset Password</title>
+  <title>Reset Password - Happy Learning</title>
   <link rel="stylesheet" href="assets/css/auth.css">
 </head>
 <body>
+  <div class="auth-container">
+    <div class="auth-box">
+      <div class="logo-container">
+        <img src="assets/images/logo.png" alt="Happy Learning Logo" class="auth-logo">
+      </div>
+      
+      <h1 class="auth-title">Reset Password</h1>
+      
+      <form id="resetForm" class="login-form">
+        <div class="form-group">
+          <label for="resetEmail">Email</label>
+          <input type="email" id="resetEmail" placeholder="Enter your registered email" required>
+        </div>
 
-<div class="auth-container">
-  <img src="https://res.cloudinary.com/dh4qek1ty/image/upload/v1758123461/image_1_fphh9f.png" alt="LMS Logo">
-  <h2>Reset Password</h2>
-  
-  <form onsubmit="return resetPassword(event)">
-    <div class="input-group">
-      <label for="reset-email">Email</label>
-      <input type="email" id="reset-email" placeholder="Enter your registered email" required>
+        <div id="resetErrorMessage" class="error-message"></div>
+
+        <button type="submit" class="login-btn">Send Reset Link</button>
+
+        <div class="form-footer">
+          <a href="login.html" class="forgot-password">Back to Login</a>
+        </div>
+      </form>
     </div>
-    <button type="submit" class="btn">Send Reset Link</button>
-  </form>
-
-  <div class="extra-links">
-    <p><a href="login.html">Back to Login</a></p>
   </div>
-</div>
 
-<script>
-function resetPassword(event) {
-  event.preventDefault();
-  const email = document.getElementById('reset-email').value;
-  alert("Password reset link sent to: " + email);
-  window.location.href = "login.html";
-}
-</script>
-
+  <script src="assets/js/authHelper.js"></script>
+  <script src="assets/js/reset.js"></script>
 </body>
 </html>

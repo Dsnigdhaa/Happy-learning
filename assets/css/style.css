@@ -1,0 +1,122 @@
+/* ========== INDEX PAGE STYLES ========== */
+
+/* Body and Canvas */
+body {
+  margin: 0;
+  font-family: 'Arial', sans-serif;
+  height: 100vh;
+  overflow: hidden;
+  background: #1f1c2c;
+  color: #fff;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+canvas {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+}
+
+/* Landing container */
+.landing {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+  padding: 50px;
+  background: rgba(0,0,0,0.55);
+  border-radius: 20px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+  max-width: 900px;
+  width: 90%;
+  position: relative;
+  z-index: 10;
+}
+
+/* Landing text */
+.landing-content {
+  flex: 1 1 400px;
+  text-align: left;
+  animation: fadeInLeft 1.5s ease-in-out;
+}
+
+.landing-content h1 {
+  font-size: 3rem;
+  margin-bottom: 20px;
+  letter-spacing: 2px;
+}
+
+.landing-content h1 span {
+  color: #ff6f61;
+}
+
+.landing-content p {
+  font-size: 1.2rem;
+  margin-bottom: 30px;
+  line-height: 1.5;
+}
+
+/* Buttons */
+.btn-group .btn {
+  display: inline-block;
+  padding: 15px 35px;
+  font-size: 1.1rem;
+  border-radius: 10px;
+  text-decoration: none;
+  color: #fff;
+  background: #ff6f61;
+  box-shadow: 0 5px 15px rgba(0,0,0,0.3);
+  transition: all 0.3s ease;
+}
+
+.btn-group .btn:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 25px rgba(0,0,0,0.5);
+}
+
+.btn-group .btn:nth-child(2) {
+  background: #4CAF50;
+  margin-left: 10px;
+}
+
+/* Landing image */
+.landing-image {
+  flex: 1 1 300px;
+  text-align: center;
+  animation: fadeInRight 1.5s ease-in-out;
+}
+
+.landing-image img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+  box-shadow: 0 8px 20px rgba(0,0,0,0.5);
+  animation: floatLogo 3s ease-in-out infinite alternate;
+}
+
+/* Animations */
+@keyframes fadeInLeft {
+  0% { opacity: 0; transform: translateX(-50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes fadeInRight {
+  0% { opacity: 0; transform: translateX(50px); }
+  100% { opacity: 1; transform: translateX(0); }
+}
+
+@keyframes floatLogo {
+  0% { transform: translateY(0); }
+  100% { transform: translateY(-10px); }
+}
+
+/* Responsive */
+@media(max-width:768px){
+  .landing { flex-direction: column; text-align: center; }
+  .landing-content { text-align: center; }
+  .btn-group .btn:nth-child(2) { margin-left: 0; margin-top: 10px; }
+  .landing-image { margin-top: 30px; }
+}

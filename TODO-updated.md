@@ -1,4 +1,4 @@
- # LMS Project - Build Remaining Pages
+# LMS Project - Build Remaining Pages
 
 ## Information Gathered
 - Existing pages like courses.html, students.html, trainers.html, assignments.html have HTML structure with sidebar, main content, cards, tables, modals.
@@ -25,6 +25,9 @@
    - notifications.js
    - settings.js
 4. **Ensure consistency** with existing pages.
+
+## Completed Tasks
+- **courses.html**: Added edit functionality for courses, including editCourse and updateCourse functions.
 
 ## Dependent Files to be edited
 - assets/css/admin.css (already updated)

@@ -1,0 +1,121 @@
+/* ========== GLOBAL STYLES ========== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: 'Arial', sans-serif;
+}
+
+body {
+  background: linear-gradient(135deg, #1f1c2c, #2c2a3c); /* same as screenshots */
+  color: #fff;
+  min-height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+/* Card Container */
+.card-container {
+  background: #1e1e2f;
+  padding: 2rem;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+  text-align: center;
+  width: 100%;
+  max-width: 420px;
+}
+
+.card-container img {
+  width: 80px;
+  margin-bottom: 15px;
+}
+
+.card-container h2 {
+  margin-bottom: 1rem;
+  color: #fff;
+}
+
+.card-container input,
+.card-container select {
+  width: 100%;
+  padding: 10px;
+  margin: 10px 0;
+  border-radius: 8px;
+  border: none;
+  outline: none;
+  background: #2a2a40;
+  color: #fff;
+}
+
+.card-container button {
+  width: 100%;
+  padding: 12px;
+  margin-top: 15px;
+  border: none;
+  border-radius: 8px;
+  background: #ff5c5c;
+  color: #fff;
+  font-size: 16px;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.card-container button:hover {
+  background: #e44c4c;
+}
+
+/* Links */
+a {
+  color: #4caf50;
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* Header + Sidebar (Dashboard Style) */
+.sidebar {
+  width: 240px;
+  background: #1e1e2f;
+  padding: 20px;
+  position: fixed;
+  top: 0; left: 0; bottom: 0;
+  box-shadow: 2px 0 6px rgba(0,0,0,0.5);
+}
+
+.sidebar h2 {
+  margin-bottom: 20px;
+  color: #ff5c5c;
+}
+
+.sidebar ul {
+  list-style: none;
+}
+
+.sidebar ul li {
+  margin: 15px 0;
+}
+
+.sidebar ul li a {
+  color: #fff;
+  text-decoration: none;
+  display: block;
+  padding: 10px;
+  border-radius: 6px;
+  transition: 0.3s;
+}
+
+.sidebar ul li a:hover,
+.sidebar ul li a.active {
+  background: #2a2a40;
+  color: #ff5c5c;
+}
+
+/* Dashboard Main */
+.main-content {
+  margin-left: 260px;
+  padding: 20px;
+  width: calc(100% - 260px);
+}

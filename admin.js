@@ -1,25 +1,9 @@
 // admin.js - handles modals, buttons, search, and interactions on admin dashboard
 
-// Modal handling
-function openAddModal(type) {
-  const modalId = 'modal' + capitalize(type);
-  const modal = document.getElementById(modalId);
-  if (!modal) return;
-  modal.style.display = 'flex';
-  // Reset inputs inside modal
-  modal.querySelectorAll('input, select').forEach(input => input.value = '');
-  // Set modal title
-  const titleElem = modal.querySelector('h3');
-  if (titleElem) titleElem.textContent = 'Add ' + capitalize(type);
-}
-
+// Modal handling - Note: openAddModal is now handled in dashboard.js to avoid conflicts
 function closeModal(modalId) {
   const modal = document.getElementById(modalId);
   if (modal) modal.style.display = 'none';
-}
-
-function capitalize(str) {
-  return str.charAt(0).toUpperCase() + str.slice(1);
 }
 
 // Close modals when clicking outside modal content
@@ -61,6 +45,10 @@ document.addEventListener('DOMContentLoaded', () => {
   setupSearch('recordedSearch', 'recordedTable');
   setupSearch('liveSearch', 'liveTable');
   setupSearch('globalSearch', 'studentTable'); // example global search on students, can be expanded
+
+  // Setup search for add-student.html and add-trainer.html pages
+  setupSearch('studentSearch', 'studentTable');
+  setupSearch('trainerSearch', 'trainerTable');
 
   // Logout button
   const logoutBtn = document.getElementById('logoutBtn');
