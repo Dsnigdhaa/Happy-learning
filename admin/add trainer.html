@@ -8,9 +8,10 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body class="admin">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Admin Panel</h2>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Happy Learning</h2>
+    <img src="../assets/images/logo.png" alt="Happy Learning Logo" class="sidebar-logo">
     <ul>
       <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
       <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
@@ -26,7 +27,7 @@
       <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
       <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
     </ul>
-  </div>
+  </aside>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -375,6 +376,14 @@
       }
     }
 
+    // Function to open modal by id
+    function openModal(modalId) {
+      const modal = document.getElementById(modalId);
+      if (modal) {
+        modal.style.display = 'flex';
+      }
+    }
+
     // Function to close modal
     function closeModal(modalId) {
       const modal = document.getElementById(modalId);
@@ -480,9 +489,69 @@
       `).join('');
     }
 
-    // Function to edit trainer (placeholder)
+    // Function to edit trainer
     function editTrainer(trainerId) {
-      alert(`Edit functionality for trainer ${trainerId} - Coming soon!`);
+      const trainers = JSON.parse(localStorage.getItem('trainers') || '[]');
+      const trainer = trainers.find(t => t.id === trainerId);
+
+      if (trainer) {
+        document.getElementById('editTrainerId').value = trainer.id;
+        document.getElementById('editTrainerName').value = trainer.name;
+        document.getElementById('editTrainerEmail').value = trainer.email;
+        document.getElementById('editTrainerPhone').value = trainer.phone || '';
+        document.getElementById('editTrainerSubject').value = trainer.subject;
+        document.getElementById('editTrainerCourses').value = trainer.courses || '';
+        document.getElementById('editTrainerExperience').value = trainer.experience || '';
+        document.getElementById('editTrainerStatus').value = trainer.status;
+        document.getElementById('editTrainerJoinDate').value = trainer.joinDate || '';
+
+        openModal('editTrainerModal');
+      } else {
+        alert('Trainer not found!');
+      }
+    }
+
+    // Function to update trainer
+    function updateTrainer() {
+      const trainerId = document.getElementById('editTrainerId').value;
+      const name = document.getElementById('editTrainerName').value.trim();
+      const email = document.getElementById('editTrainerEmail').value.trim();
+      const phone = document.getElementById('editTrainerPhone').value.trim();
+      const subject = document.getElementById('editTrainerSubject').value.trim();
+      const courses = document.getElementById('editTrainerCourses').value.trim();
+      const experience = document.getElementById('editTrainerExperience').value;
+      const status = document.getElementById('editTrainerStatus').value;
+      const joinDate = document.getElementById('editTrainerJoinDate').value;
+
+      // Basic validation
+      if (!name || !email || !subject || !status) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const trainers = JSON.parse(localStorage.getItem('trainers') || '[]');
+      const trainerIndex = trainers.findIndex(t => t.id === trainerId);
+
+      if (trainerIndex !== -1) {
+        trainers[trainerIndex] = {
+          ...trainers[trainerIndex],
+          name,
+          email: email.toLowerCase(),
+          phone,
+          subject,
+          courses,
+          experience: experience ? parseInt(experience) : 0,
+          status,
+          joinDate
+        };
+
+        localStorage.setItem('trainers', JSON.stringify(trainers));
+        renderTrainerTable();
+        closeModal('editTrainerModal');
+        alert('Trainer updated successfully!');
+      } else {
+        alert('Trainer not found!');
+      }
     }
 
     // Function to delete trainer
@@ -566,6 +635,65 @@
           <button type="reset" class="btn-secondary" id="resetBtn">Reset</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="editTrainerModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('editTrainerModal')">&times;</span>
+      <h3>Edit Trainer</h3>
+      <input type="hidden" id="editTrainerId" />
+      <div class="form-row">
+        <label for="editTrainerName">Name *</label>
+        <input type="text" id="editTrainerName" name="editTrainerName" placeholder="Enter trainer name" required minlength="2" maxlength="50" />
+        <div class="field-error" id="editNameError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerEmail">Email *</label>
+        <input type="email" id="editTrainerEmail" name="editTrainerEmail" placeholder="Enter trainer email" required />
+        <div class="field-error" id="editEmailError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerPhone">Phone Number</label>
+        <input type="tel" id="editTrainerPhone" name="editTrainerPhone" placeholder="Enter phone number (optional)" pattern="[0-9+\-\s()]{10,15}" />
+        <div class="field-error" id="editPhoneError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerSubject">Subject/Specialization *</label>
+        <input type="text" id="editTrainerSubject" name="editTrainerSubject" placeholder="Enter subject or specialization" required />
+        <div class="field-error" id="editSubjectError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerCourses">Courses Teaching</label>
+        <input type="text" id="editTrainerCourses" name="editTrainerCourses" placeholder="Enter courses (comma separated)" />
+        <small style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Example: Web Development, Data Science, Machine Learning</small>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerExperience">Years of Experience</label>
+        <input type="number" id="editTrainerExperience" name="editTrainerExperience" placeholder="Enter years of experience" min="0" max="50" />
+        <div class="field-error" id="editExperienceError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerStatus">Status *</label>
+        <select id="editTrainerStatus" name="editTrainerStatus" required>
+          <option value="">Select status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div class="field-error" id="editStatusError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editTrainerJoinDate">Join Date</label>
+        <input type="date" id="editTrainerJoinDate" name="editTrainerJoinDate" />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-primary" id="updateBtn" onclick="updateTrainer()">
+          <span class="btn-text">Update</span>
+          <span class="loading" id="updateLoadingSpinner" style="display: none;"></span>
+        </button>
+        <button type="button" class="btn-secondary" onclick="closeModal('editTrainerModal')">Cancel</button>
+      </div>
     </div>
   </div>
 </body>

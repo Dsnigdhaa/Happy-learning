@@ -8,12 +8,13 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
 </head>
 <body class="admin">
-  <!-- Sidebar -->
-  <div class="sidebar">
-    <h2>Admin Panel</h2>
-<ul>
-      <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
-      <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <h2>Happy Learning</h2>
+    <img src="../assets/images/logo.png" alt="Happy Learning Logo" class="sidebar-logo">
+    <ul>
+      <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="users.html" class="active"><i class="fas fa-users"></i> Users</a></li>
       <li><a href="courses.html"><i class="fas fa-book"></i> Course management</a></li>
       <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
       <li><a href="recorded classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
@@ -24,9 +25,9 @@
       <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
       <li><a href="about.html"><i class="fas fa-info-circle"></i> About</a></li>
       <li><a href="contact.html"><i class="fas fa-envelope"></i> Contact</a></li>
-      <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>>
+      <li><a href="analytics.html"><i class="fas fa-chart-bar"></i> Analytics</a></li>
     </ul>
-  </div>
+  </aside>
 
   <!-- Main Content -->
   <div class="main-content">
@@ -441,9 +442,63 @@
       `).join('');
     }
 
-    // Function to edit student (placeholder)
+    // Function to edit student
     function editStudent(studentId) {
-      alert(`Edit functionality for student ${studentId} - Coming soon!`);
+      const students = JSON.parse(localStorage.getItem('students') || '[]');
+      const student = students.find(s => s.id === studentId);
+
+      if (student) {
+        document.getElementById('editStudentId').value = student.id;
+        document.getElementById('editStudentName').value = student.name;
+        document.getElementById('editStudentEmail').value = student.email;
+        document.getElementById('editStudentPhone').value = student.phone || '';
+        document.getElementById('editStudentCourses').value = student.courses || '';
+        document.getElementById('editStudentStatus').value = student.status;
+        document.getElementById('editStudentJoinDate').value = student.joinDate || '';
+
+        openModal('editStudentModal');
+      } else {
+        alert('Student not found!');
+      }
+    }
+
+    // Function to update student
+    function updateStudent() {
+      const studentId = document.getElementById('editStudentId').value;
+      const name = document.getElementById('editStudentName').value.trim();
+      const email = document.getElementById('editStudentEmail').value.trim();
+      const phone = document.getElementById('editStudentPhone').value.trim();
+      const courses = document.getElementById('editStudentCourses').value.trim();
+      const status = document.getElementById('editStudentStatus').value;
+      const joinDate = document.getElementById('editStudentJoinDate').value;
+
+      // Basic validation
+      if (!name || !email || !status) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      const students = JSON.parse(localStorage.getItem('students') || '[]');
+      const studentIndex = students.findIndex(s => s.id === studentId);
+
+      if (studentIndex !== -1) {
+        students[studentIndex] = {
+          ...students[studentIndex],
+          name,
+          email: email.toLowerCase(),
+          phone,
+          courses,
+          status,
+          joinDate
+        };
+
+        localStorage.setItem('students', JSON.stringify(students));
+        renderStudentTable();
+        closeModal('editStudentModal');
+        alert('Student updated successfully!');
+      } else {
+        alert('Student not found!');
+      }
     }
 
     // Function to delete student
@@ -515,6 +570,55 @@
           <button type="reset" class="btn-secondary" id="resetBtn">Reset</button>
         </div>
       </form>
+    </div>
+  </div>
+
+  <!-- EDIT MODAL -->
+  <div id="editStudentModal" class="modal">
+    <div class="modal-content">
+      <span class="close-btn" onclick="closeModal('editStudentModal')">&times;</span>
+      <h3>Edit Student</h3>
+      <input type="hidden" id="editStudentId" />
+      <div class="form-row">
+        <label for="editStudentName">Name *</label>
+        <input type="text" id="editStudentName" name="editStudentName" placeholder="Enter student name" required minlength="2" maxlength="50" />
+        <div class="field-error" id="editNameError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editStudentEmail">Email *</label>
+        <input type="email" id="editStudentEmail" name="editStudentEmail" placeholder="Enter student email" required />
+        <div class="field-error" id="editEmailError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editStudentPhone">Phone Number</label>
+        <input type="tel" id="editStudentPhone" name="editStudentPhone" placeholder="Enter phone number (optional)" pattern="[0-9+\-\s()]{10,15}" />
+        <div class="field-error" id="editPhoneError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editStudentCourses">Courses Enrolled</label>
+        <input type="text" id="editStudentCourses" name="editStudentCourses" placeholder="Enter courses (comma separated)" />
+        <small style="color: rgba(255,255,255,0.6); font-size: 0.85rem;">Example: Mathematics, Physics, Chemistry</small>
+      </div>
+      <div class="form-row">
+        <label for="editStudentStatus">Status *</label>
+        <select id="editStudentStatus" name="editStudentStatus" required>
+          <option value="">Select status</option>
+          <option value="active">Active</option>
+          <option value="inactive">Inactive</option>
+        </select>
+        <div class="field-error" id="editStatusError"></div>
+      </div>
+      <div class="form-row">
+        <label for="editStudentJoinDate">Join Date</label>
+        <input type="date" id="editStudentJoinDate" name="editStudentJoinDate" />
+      </div>
+      <div class="form-actions">
+        <button type="button" class="btn-primary" id="updateBtn" onclick="updateStudent()">
+          <span class="btn-text">Update</span>
+          <span class="loading" id="updateLoadingSpinner" style="display: none;"></span>
+        </button>
+        <button type="button" class="btn-secondary" onclick="closeModal('editStudentModal')">Cancel</button>
+      </div>
     </div>
   </div>
 </body>

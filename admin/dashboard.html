@@ -36,9 +36,9 @@
       <button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button>
       <h1>Dashboard</h1>
       <div class="header-right">
-        <div class="search-bar">
-          <input id="globalSearch" placeholder="Search students / trainers / courses..." />
-          <i class="fas fa-search"></i>
+        <div class="search-bar" style="position: relative; display: inline-block;">
+          <input id="globalSearch" placeholder="Search students / trainers / courses..." style="padding-right: 35px;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none;"></i>
         </div>
         <div class="header-icons">
           <img src="../assets/images/profile.png" alt="Profile" class="profile-icon" onclick="openProfileModal()">
@@ -99,7 +99,10 @@
       <div class="table-container">
         <h3>Assignments</h3>
         <div style="overflow:auto;">
-          <input id="assignmentSearch" placeholder="Search assignments..." class="mini-search" />
+        <div style="position: relative; display: inline-block; width: 100%;">
+          <input id="assignmentSearch" placeholder="Search assignments..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+        </div>
           <table id="assignmentTable">
             <thead><tr><th>Title</th><th>Course</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
             <tbody></tbody>
@@ -112,7 +115,10 @@
     <div class="section">
       <div class="table-container">
         <h3>Students Attendance</h3>
-        <input id="studentSearch" placeholder="Search students..." class="mini-search" />
+        <div style="position: relative; display: inline-block; width: 100%;">
+          <input id="studentSearch" placeholder="Search students..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+        </div>
         <table id="studentTable">
           <thead><tr><th>Name</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody></tbody>
@@ -120,7 +126,10 @@
       </div>
       <div class="table-container">
         <h3>Trainers Attendance</h3>
-        <input id="trainerSearch" placeholder="Search trainers..." class="mini-search" />
+        <div style="position: relative; display: inline-block; width: 100%;">
+          <input id="trainerSearch" placeholder="Search trainers..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+        </div>
         <table id="trainerTable">
           <thead><tr><th>Name</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody></tbody>
@@ -132,7 +141,10 @@
     <div class="section">
       <div class="table-container">
         <h3>Recorded Classes</h3>
-        <input id="recordedSearch" placeholder="Search recorded classes..." class="mini-search" />
+        <div style="position: relative; display: inline-block; width: 100%;">
+          <input id="recordedSearch" placeholder="Search recorded classes..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+        </div>
         <table id="recordedTable">
           <thead><tr><th>Title</th><th>Course</th><th>Watch</th><th>Actions</th></tr></thead>
           <tbody></tbody>
@@ -140,7 +152,10 @@
       </div>
       <div class="table-container">
         <h3>Live Classes</h3>
-        <input id="liveSearch" placeholder="Search live classes..." class="mini-search" />
+        <div style="position: relative; display: inline-block; width: 100%;">
+          <input id="liveSearch" placeholder="Search live classes..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+        </div>
         <table id="liveTable">
           <thead><tr><th>Title</th><th>Trainer</th><th>Date</th><th>Join</th><th>Actions</th></tr></thead>
           <tbody></tbody>

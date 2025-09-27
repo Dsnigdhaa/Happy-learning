@@ -71,6 +71,14 @@ document.addEventListener('DOMContentLoaded', () => {
     'Math Basics course updated'
   ];
 
+  let recentActivities = [
+    'Student John Doe enrolled in Math Basics - 2 hours ago',
+    'Assignment "Physics Lab" submitted by Jane Smith - 1 day ago',
+    'New course "Advanced Chemistry" added - 3 days ago',
+    'Trainer Ms. Emma marked attendance for Biology class - 5 days ago',
+    'Holiday "Independence Day" scheduled - 1 week ago'
+  ];
+
   // Populate Counts
   document.getElementById('studentCount').textContent = students.length;
   document.getElementById('trainerCount').textContent = trainers.length;
@@ -80,14 +88,30 @@ document.addEventListener('DOMContentLoaded', () => {
   document.getElementById('videoCount').textContent = recordedClasses.length;
 
   // Populate Tables
-  function populateTable(id, data, columns, updateCount){
+  function populateTable(id, data, columns, updateCount, type) {
     const tbody = document.querySelector(`#${id} tbody`);
     tbody.innerHTML = '';
+    if (data.length === 0) {
+      const tr = document.createElement('tr');
+      const td = document.createElement('td');
+      td.colSpan = columns.length + 1; // +1 for actions column
+      td.style.textAlign = 'center';
+      td.style.color = 'rgba(255,255,255,0.6)';
+      td.textContent = 'No data found';
+      tbody.appendChild(tr);
+      return;
+    }
     data.forEach((item, index) => {
       const tr = document.createElement('tr');
       columns.forEach(col => {
         const td = document.createElement('td');
-        td.textContent = item[col];
+        if (col === 'link' && type === 'recorded') {
+          td.innerHTML = `<a href="${item[col]}" target="_blank">Watch</a>`;
+        } else if (col === 'link' && type === 'live') {
+          td.innerHTML = `<a href="${item[col]}" target="_blank">Join</a>`;
+        } else {
+          td.textContent = item[col];
+        }
         tr.appendChild(td);
       });
       const actionTd = document.createElement('td');
@@ -99,15 +123,18 @@ document.addEventListener('DOMContentLoaded', () => {
       const delBtn = document.createElement('button');
       delBtn.textContent='Delete';
       delBtn.className='delete-btn';
-      delBtn.onclick = ()=>{
-        data.splice(index, 1);
-        tr.remove();
-        if(updateCount) updateCount();
+      delBtn.onclick = () => {
+        if (confirm('Are you sure you want to delete this item?')) {
+          data.splice(index, 1);
+          populateTable(id, data, columns, updateCount, type);
+          if (updateCount) updateCount();
+        }
       };
       actionTd.appendChild(delBtn);
       tr.appendChild(actionTd);
       tbody.appendChild(tr);
     });
+    if (updateCount) updateCount();
   }
 
   function updateStudentCount(){ document.getElementById('studentCount').textContent = students.length; }
@@ -117,11 +144,19 @@ document.addEventListener('DOMContentLoaded', () => {
   function updateMaterialCount(){ document.getElementById('materialCount').textContent = materials.length; }
   function updateVideoCount(){ document.getElementById('videoCount').textContent = recordedClasses.length; }
 
-  populateTable('studentTable', students, ['name','course','status'], updateStudentCount);
-  populateTable('trainerTable', trainers, ['name','course','status'], updateTrainerCount);
-  populateTable('assignmentTable', assignments, ['title','course','due','status'], updateAssignmentCount);
-  populateTable('recordedTable', recordedClasses, ['title','course','link'], updateVideoCount);
-  populateTable('liveTable', liveClasses, ['title','trainer','date']);
+  populateTable('studentTable', students, ['name','course','status'], updateStudentCount, 'student');
+  populateTable('trainerTable', trainers, ['name','course','status'], updateTrainerCount, 'trainer');
+  populateTable('assignmentTable', assignments, ['title','course','due','status'], updateAssignmentCount, 'assignment');
+  populateTable('recordedTable', recordedClasses, ['title','course','link'], updateVideoCount, 'recorded');
+  populateTable('liveTable', liveClasses, ['title','trainer','date','link'], null, 'live');
+
+  // Populate recent activities
+  const activityList = document.getElementById('activityList');
+  recentActivities.forEach(a => {
+    const li = document.createElement('li');
+    li.textContent = a;
+    activityList.appendChild(li);
+  });
 
   // Populate holidays
   const holidaysList = document.getElementById('holidaysList');
@@ -142,6 +177,102 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('notifBadge').textContent = notifications.length;
   }
   updateNotifications();
+
+
+  // Setup mini-searches with Enter and icon support
+  function setupSearch(searchId, data, tableId, columns, type) {
+    const searchInput = document.getElementById(searchId);
+    const searchIcon = searchInput ? searchInput.parentElement.querySelector('i.fa-search') : null;
+    if (searchInput) {
+      const performSearch = function() {
+        const term = searchInput.value.toLowerCase();
+        const filtered = data.filter(item => 
+          Object.values(item).some(val => val.toString().toLowerCase().includes(term))
+        );
+        populateTable(tableId, filtered, columns, null, type);
+      };
+
+      searchInput.addEventListener('input', performSearch);
+      searchInput.addEventListener('keydown', function(e) {
+        if (e.key === 'Enter') {
+          performSearch();
+        }
+      });
+
+      if (searchIcon) {
+        searchIcon.style.cursor = 'pointer';
+        searchIcon.style.pointerEvents = 'auto';
+        searchIcon.addEventListener('click', performSearch);
+      }
+    }
+  }
+
+  setupSearch('studentSearch', students, 'studentTable', ['name','course','status'], 'student');
+  setupSearch('trainerSearch', trainers, 'trainerTable', ['name','course','status'], 'trainer');
+  setupSearch('assignmentSearch', assignments, 'assignmentTable', ['title','course','due','status'], 'assignment');
+  setupSearch('recordedSearch', recordedClasses, 'recordedTable', ['title','course','link'], 'recorded');
+  setupSearch('liveSearch', liveClasses, 'liveTable', ['title','trainer','date','link'], 'live');
+
+  // Global Search - filters all tables on dashboard
+  const globalSearch = document.getElementById('globalSearch');
+  const globalIcon = globalSearch ? globalSearch.parentElement.querySelector('i.fa-search') : null;
+  if (globalSearch) {
+    const performGlobalSearch = function() {
+      const term = globalSearch.value.toLowerCase();
+      if (term.length > 0) {
+        // Filter each dataset
+        const filteredStudents = students.filter(s => 
+          s.name.toLowerCase().includes(term) || s.course.toLowerCase().includes(term) || s.status.toLowerCase().includes(term)
+        );
+        const filteredTrainers = trainers.filter(t => 
+          t.name.toLowerCase().includes(term) || t.course.toLowerCase().includes(term) || t.status.toLowerCase().includes(term)
+        );
+        const filteredAssignments = assignments.filter(a => 
+          a.title.toLowerCase().includes(term) || a.course.toLowerCase().includes(term) || a.due.toLowerCase().includes(term) || a.status.toLowerCase().includes(term)
+        );
+        const filteredRecorded = recordedClasses.filter(r => 
+          r.title.toLowerCase().includes(term) || r.course.toLowerCase().includes(term)
+        );
+        const filteredLive = liveClasses.filter(l => 
+          l.title.toLowerCase().includes(term) || l.trainer.toLowerCase().includes(term) || l.date.toLowerCase().includes(term)
+        );
+
+        // Update each table
+        populateTable('studentTable', filteredStudents, ['name','course','status'], null, 'student');
+        populateTable('trainerTable', filteredTrainers, ['name','course','status'], null, 'trainer');
+        populateTable('assignmentTable', filteredAssignments, ['title','course','due','status'], null, 'assignment');
+        populateTable('recordedTable', filteredRecorded, ['title','course','link'], null, 'recorded');
+        populateTable('liveTable', filteredLive, ['title','trainer','date','link'], null, 'live');
+
+        // Check if all filtered are empty
+        const totalMatches = filteredStudents.length + filteredTrainers.length + filteredAssignments.length + filteredRecorded.length + filteredLive.length;
+        if (totalMatches === 0) {
+          // Optionally show a global message, but since tables show "No data found", alert optional
+          // alert(`No data found for "${term}"`);
+        }
+      } else {
+        // Reset to full data if empty
+        populateTable('studentTable', students, ['name','course','status'], updateStudentCount, 'student');
+        populateTable('trainerTable', trainers, ['name','course','status'], updateTrainerCount, 'trainer');
+        populateTable('assignmentTable', assignments, ['title','course','due','status'], updateAssignmentCount, 'assignment');
+        populateTable('recordedTable', recordedClasses, ['title','course','link'], updateVideoCount, 'recorded');
+        populateTable('liveTable', liveClasses, ['title','trainer','date','link'], null, 'live');
+      }
+    };
+
+    globalSearch.addEventListener('input', performGlobalSearch);
+    globalSearch.addEventListener('keydown', function(e) {
+      if (e.key === 'Enter') {
+        performGlobalSearch();
+      }
+    });
+
+    if (globalIcon) {
+      globalIcon.style.cursor = 'pointer';
+      globalIcon.style.pointerEvents = 'auto';
+      globalIcon.addEventListener('click', performGlobalSearch);
+    }
+  }
 
   // Logout
   document.getElementById('logoutBtn').addEventListener('click', ()=>alert('Logout clicked!'));

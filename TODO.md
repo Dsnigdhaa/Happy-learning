@@ -1,36 +1,23 @@
- # LMS Project - Build Remaining Pages
+## TODO List for Fixing Sidebars and Button Functionalities
 
-## Information Gathered
-- Existing pages like courses.html, students.html, trainers.html, assignments.html have HTML structure with sidebar, main content, cards, tables, modals.
-- Styles are in assets/css/admin.css, updated with dashboard-specific styles.
-- JS files are separate, e.g., student.js, trainer.js.
-- Some pages like about.html, contact.html are static.
+### 1. Standardize Sidebars Across All Admin Pages
+- [ ] Update admin/analytics.html: Change <div class="sidebar"> to <aside class="sidebar">, add logo, change h2 to "Happy Learning", wrap links in <ul>
+- [ ] Update admin/add student.html: Change <div class="sidebar"> to <aside class="sidebar">, add logo, change h2 to "Happy Learning"
+- [ ] Update admin/add trainer.html: Change <div class="sidebar"> to <aside class="sidebar">, add logo, change h2 to "Happy Learning"
+- [ ] Update admin/trainers.html: Change <div class="sidebar"> to <aside class="sidebar">, add logo, change h2 to "Happy Learning"
+- [ ] Update admin/students.html: Change <div class="sidebar"> to <aside class="sidebar">, add logo, change h2 to "Happy Learning"
+- [ ] Check and fix any other inconsistent sidebars
 
-## Plan
-1. **Update existing HTML files if needed** (e.g., add full functionality to assignments.html).
-2. **Create HTML for remaining pages**:
-   - materials.html
-   - live.html
-   - recorded.html
-   - users.html
-   - notifications.html
-   - settings.html
-   - about.html (static)
-   - contact.html (static)
-3. **Create corresponding JS files** for dynamic pages:
-   - materials.js
-   - live.js
-   - recorded.js
-   - users.js
-   - notifications.js
-   - settings.js
-4. **Ensure consistency** with existing pages.
+### 2. Implement Edit Functionality
+- [ ] In admin/add student.html: Replace editStudent placeholder with modal to edit student details
+- [ ] In admin/add trainer.html: Replace editTrainer placeholder with modal to edit trainer details
 
-## Dependent Files to be edited
-- assets/css/admin.css (already updated)
-- New HTML and JS files
+### 3. Verify Button Functionalities
+- [ ] Test add buttons: Ensure modals open and add items
+- [ ] Test edit buttons: Ensure edit modals work and update items
+- [ ] Test delete buttons: Ensure items are removed
+- [ ] Test search buttons: Ensure filtering works
+- [ ] Run pages in browser to verify
 
-## Followup steps
-- Verify each page renders correctly.
-- Test functionality like search, add/edit/delete.
-- Run the application to check for errors.
+### 4. Followup
+- [ ] Test all pages for consistency and functionality
