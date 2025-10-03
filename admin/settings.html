@@ -90,11 +90,54 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('editProfileModal')">&times;</span>
       <h3>Edit Profile</h3>
-      <input type="text" placeholder="Full Name" value="John Doe">
-      <input type="email" placeholder="Email" value="admin@example.com">
-      <input type="password" placeholder="Change Password">
-      <button>Save Changes</button>
+      <input type="text" id="editFullName" placeholder="Full Name" value="John Doe">
+      <input type="email" id="editEmail" placeholder="Email" value="admin@example.com">
+      <input type="password" id="editPassword" placeholder="Change Password">
+      <button onclick="saveProfileChanges()">Save Changes</button>
     </div>
   </div>
+
+  <script>
+    function openModal(id) {
+      document.getElementById(id).style.display = 'flex';
+    }
+    function closeModal(id) {
+      document.getElementById(id).style.display = 'none';
+    }
+
+    function saveProfileChanges() {
+      const fullName = document.getElementById('editFullName').value.trim();
+      const email = document.getElementById('editEmail').value.trim();
+      const password = document.getElementById('editPassword').value;
+
+      if (!fullName || !email) {
+        alert('Please fill in all required fields.');
+        return;
+      }
+
+      // Update the profile display
+      const profileContainers = document.querySelectorAll('.table-container');
+      if (profileContainers.length > 0) {
+        // The first .table-container is Admin Profile
+        const adminProfile = profileContainers[0];
+        const paragraphs = adminProfile.querySelectorAll('p');
+        paragraphs.forEach(p => {
+          if (p.innerHTML.startsWith('<b>Name:</b>')) {
+            p.innerHTML = `<b>Name:</b> ${fullName}`;
+          } else if (p.innerHTML.startsWith('<b>Email:</b>')) {
+            p.innerHTML = `<b>Email:</b> ${email}`;
+          }
+        });
+      }
+
+      // If password changed, show message (in real app, would update server)
+      if (password) {
+        alert('Password updated successfully!');
+      }
+
+      alert('Profile updated successfully!');
+      closeModal('editProfileModal');
+    }
+  </script>
 </body>
 </html>

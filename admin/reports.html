@@ -7,6 +7,45 @@
   <link rel="stylesheet" href="../assets/css/admin.css">
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script defer src="../assets/js/dashboard.js"></script>
+  <style>
+    .performance-section {
+      margin: 30px 0;
+      background: #2a2738;
+      padding: 20px;
+      border-radius: 12px;
+      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+    }
+    .performance-section h2 {
+      color: #ffb800;
+      margin-bottom: 20px;
+    }
+    .performance-table {
+      width: 100%;
+      border-collapse: collapse;
+      background: #3a3748;
+      border-radius: 8px;
+      overflow: hidden;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+    }
+    .performance-table th,
+    .performance-table td {
+      padding: 12px 15px;
+      text-align: left;
+      border-bottom: 1px solid #ffffff;
+      color: #fff;
+    }
+    .performance-table th {
+      background: #4a4560;
+      color: #ffb800;
+      font-weight: 700;
+    }
+    .performance-table tbody tr:hover {
+      background: #4a4560;
+    }
+    .performance-table tbody tr:nth-child(even) {
+      background: #3f3c52;
+    }
+  </style>
 </head>
 <body>
   <canvas id="bgCanvas"></canvas>
@@ -56,6 +95,96 @@
         <p>Course Completion</p>
       </div>
     </div>
+
+    <section class="performance-section">
+      <h2>Trainer Performance</h2>
+      <table class="performance-table">
+        <thead>
+          <tr>
+            <th>Trainer Name</th>
+            <th>Courses Taught</th>
+            <th>Students Trained</th>
+            <th>Average Rating</th>
+            <th>Completion Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>John Doe</td>
+            <td>5</td>
+            <td>120</td>
+            <td>4.8</td>
+            <td>92%</td>
+          </tr>
+          <tr>
+            <td>Jane Smith</td>
+            <td>3</td>
+            <td>85</td>
+            <td>4.6</td>
+            <td>88%</td>
+          </tr>
+          <tr>
+            <td>Mike Johnson</td>
+            <td>4</td>
+            <td>95</td>
+            <td>4.7</td>
+            <td>90%</td>
+          </tr>
+          <tr>
+            <td>Sarah Wilson</td>
+            <td>2</td>
+            <td>60</td>
+            <td>4.9</td>
+            <td>95%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+
+    <section class="performance-section">
+      <h2>Student Performance</h2>
+      <table class="performance-table">
+        <thead>
+          <tr>
+            <th>Student Name</th>
+            <th>Courses Enrolled</th>
+            <th>Assignments Completed</th>
+            <th>Average Score</th>
+            <th>Attendance Rate</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Alice Brown</td>
+            <td>3</td>
+            <td>15</td>
+            <td>88%</td>
+            <td>95%</td>
+          </tr>
+          <tr>
+            <td>Bob Davis</td>
+            <td>2</td>
+            <td>10</td>
+            <td>82%</td>
+            <td>90%</td>
+          </tr>
+          <tr>
+            <td>Charlie Evans</td>
+            <td>4</td>
+            <td>20</td>
+            <td>91%</td>
+            <td>98%</td>
+          </tr>
+          <tr>
+            <td>Diana Foster</td>
+            <td>1</td>
+            <td>5</td>
+            <td>85%</td>
+            <td>92%</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
   </main>
 
   <!-- MODAL -->

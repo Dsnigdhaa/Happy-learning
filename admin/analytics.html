@@ -186,7 +186,7 @@ canvas {
     <div class="navbar">
       <h1>Analytics</h1>
       <div class="nav-actions">
-        <button onclick="logout()">Logout</button>
+        <button id="logoutBtn" onclick="window.location.href='../login.html'">Logout</button>
       </div>
     </div>
 
@@ -223,10 +223,6 @@ canvas {
 
   <script src="../assets/js/admin.js"></script>
   <script>
-    function logout() {
-      alert('Logout functionality not implemented.');
-    }
-
     const enrollmentsCtx = document.getElementById('enrollmentsChart').getContext('2d');
     const enrollmentsChart = new Chart(enrollmentsCtx, {
       type: 'bar',

@@ -6,93 +6,102 @@
   <title>Happy Learning - Notifications</title>
   <link rel="stylesheet" href="../assets/css/admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
-  <style>
-    .notifications-section {
-      max-width: 800px;
-      margin: 20px auto;
-      background: #2a2738;
-      padding: 20px 30px;
-      border-radius: 12px;
-      box-shadow: 0 8px 30px rgba(0,0,0,0.6);
-    }
-    .notifications-list {
-      list-style: none;
-      padding: 0;
-      margin: 0;
-    }
-    .notifications-list li {
-      padding: 15px;
-      border-bottom: 1px solid rgba(255,255,255,0.1);
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-    .notifications-list li:last-child {
-      border-bottom: none;
-    }
-    .notification-content {
-      flex: 1;
-    }
-    .notification-content i {
-      margin-right: 10px;
-      color: #ffb800;
-    }
-    .notification-actions {
-      display: flex;
-      gap: 10px;
-    }
-    .btn-mark-read, .btn-delete {
-      background: #ffb800;
-      border: none;
-      padding: 5px 10px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #2a2738;
-      transition: transform 0.2s ease;
-    }
-    .btn-mark-read:hover, .btn-delete:hover {
-      transform: translateY(-2px);
-    }
-    .modal-content {
-      background: #2a2738;
-      padding: 20px;
-      border-radius: 12px;
-      width: 400px;
-      position: relative;
-      box-shadow: 0 10px 40px rgba(0,0,0,0.6);
-    }
-    .modal-content h3 {
-      margin-bottom: 15px;
-      color: #ff5c5c;
-    }
-    .modal-content input,
-    .modal-content textarea {
-      width: 100%;
-      padding: 10px;
-      margin-bottom: 10px;
-      border-radius: 8px;
-      border: none;
-      background: #3a3748;
-      color: #fff;
-    }
-    .modal-content button {
-      background: #ffb800;
-      border: none;
-      padding: 10px 15px;
-      border-radius: 8px;
-      cursor: pointer;
-      font-weight: 700;
-      color: #2a2738;
-    }
-    .close-btn {
-      position: absolute;
-      right: 10px;
-      top: 10px;
-      cursor: pointer;
-      font-size: 20px;
-    }
-  </style>
+    <style>
+      .notifications-section {
+        max-width: 800px;
+        margin: 20px auto;
+        background: #2a2738;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 8px 30px rgba(0,0,0,0.6);
+      }
+      .notifications-list {
+        list-style: none;
+        padding: 0;
+        margin: 0;
+      }
+      .notifications-list li {
+        padding: 15px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        transition: background-color 0.3s ease;
+        background-color: #3a3748; /* changed background for better contrast */
+        color: #eee; /* lighter text */
+      }
+      .notifications-list li:hover {
+        background-color: rgba(255, 184, 0, 0.3);
+        color: #222; /* darker text on hover */
+      }
+      .notifications-list li:last-child {
+        border-bottom: none;
+      }
+      .notification-content {
+        flex: 1;
+        color: inherit; /* inherit color from li */
+      }
+      .notification-content i {
+        margin-right: 10px;
+        color: #ffb800;
+      }
+      .notification-actions {
+        display: flex;
+        gap: 10px;
+      }
+      .btn-mark-read, .btn-delete {
+        background: #ffb800;
+        border: none;
+        padding: 5px 10px;
+        border-radius: 5px;
+        cursor: pointer;
+        font-weight: 700;
+        color: #2a2738;
+        transition: transform 0.2s ease, background-color 0.3s ease;
+      }
+      .btn-mark-read:hover, .btn-delete:hover {
+        transform: translateY(-2px);
+        background-color: #e6a700;
+      }
+      .modal-content {
+        background: #2a2738;
+        padding: 20px;
+        border-radius: 12px;
+        width: 400px;
+        position: relative;
+        box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+      }
+      .modal-content h3 {
+        margin-bottom: 15px;
+        color: #ff5c5c;
+      }
+      .modal-content input,
+      .modal-content textarea {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 8px;
+        border: none;
+        background: #3a3748;
+        color: #fff;
+      }
+      .modal-content button {
+        background: #ffb800;
+        border: none;
+        padding: 10px 15px;
+        border-radius: 8px;
+        cursor: pointer;
+        font-weight: 700;
+        color: #2a2738;
+      }
+      .close-btn {
+        position: absolute;
+        right: 10px;
+        top: 10px;
+        cursor: pointer;
+        font-size: 20px;
+      }
+    </style>
 </head>
 <body>
   <!-- SIDEBAR -->
@@ -131,7 +140,7 @@
             <i class="fas fa-bell"></i>
             <span id="notifBadge" class="badge">7</span>
           </div>
-          <button id="logoutBtn" class="logout">Logout</button>
+          <button id="logoutBtn" class="logout" onclick="window.location.href='../login.html'">Logout</button>
         </div>
       </div>
     </header>
@@ -220,124 +229,119 @@
     </div>
   </div>
 
-  <script>
-    function openModal(id) {
-      document.getElementById(id).style.display = 'flex';
-    }
-    function closeModal(id) {
-      document.getElementById(id).style.display = 'none';
-    }
-    function updateBadge(increment) {
-      const badge = document.getElementById('notifBadge');
-      let count = parseInt(badge.textContent) || 0;
-      count += increment;
-      if (count < 0) count = 0;
-      badge.textContent = count;
-    }
-    function addNotification() {
-      const title = document.getElementById('notifTitle').value.trim();
-      const message = document.getElementById('notifMessage').value.trim();
-      if (title && message) {
-        // Create new notification item
-        const list = document.querySelector('.notifications-list');
-        const li = document.createElement('li');
-        li.innerHTML = `
-          <div class="notification-content">
-            <i class="fas fa-bullhorn"></i> ${title}: ${message}
-          </div>
-          <div class="notification-actions">
-            <button class="btn-mark-read">Mark as Read</button>
-            <button class="btn-delete">Delete</button>
-          </div>
-        `;
-        // Add event listeners to buttons
-        li.querySelector('.btn-delete').addEventListener('click', function() {
-          li.remove();
-          updateBadge(-1); // Assuming deleted unread
-        });
-        li.querySelector('.btn-mark-read').addEventListener('click', function() {
-          li.style.opacity = '0.5';
-          this.disabled = true;
-          this.textContent = 'Read';
-          updateBadge(-1);
-        });
-        list.appendChild(li);
-        updateBadge(1); // New unread
-        alert('Notification added successfully!');
-        closeModal('addNotificationModal');
-        document.getElementById('notifTitle').value = '';
-        document.getElementById('notifMessage').value = '';
-      } else {
-        alert('Please fill all fields.');
+    <script>
+      function openModal(id) {
+        document.getElementById(id).style.display = 'flex';
       }
-    }
-
-    // Attach events to existing buttons
-    document.addEventListener('DOMContentLoaded', function() {
-      const items = document.querySelectorAll('.notifications-list li');
-      items.forEach(li => {
-        const deleteBtn = li.querySelector('.btn-delete');
-        const readBtn = li.querySelector('.btn-mark-read');
-        deleteBtn.addEventListener('click', function() {
-          li.remove();
-          updateBadge(-1);
-        });
-        readBtn.addEventListener('click', function() {
-          li.style.opacity = '0.5';
-          this.disabled = true;
-          this.textContent = 'Read';
-          updateBadge(-1);
-        });
-      });
-    });
-
-    // Search functionality
-    const globalSearch = document.getElementById('globalSearch');
-    const clearSearch = document.getElementById('clearSearch');
-
-    globalSearch.addEventListener('input', function() {
-      const query = this.value.toLowerCase();
-      clearSearch.style.display = query ? 'block' : 'none';
-      const items = document.querySelectorAll('.notifications-list li');
-      let anyVisible = false;
-      items.forEach(item => {
-        const text = item.textContent.toLowerCase();
-        const isVisible = text.includes(query);
-        item.style.display = isVisible ? '' : 'none';
-        if (isVisible) anyVisible = true;
-      });
-      // Show "No data found" message if no items visible
-      let noDataElem = document.getElementById('noDataMessage');
-      if (!noDataElem) {
-        noDataElem = document.createElement('div');
-        noDataElem.id = 'noDataMessage';
-        noDataElem.style.color = '#ffb800';
-        noDataElem.style.textAlign = 'center';
-        noDataElem.style.marginTop = '20px';
-        noDataElem.textContent = 'No notifications found.';
-        document.querySelector('.notifications-section').appendChild(noDataElem);
+      function closeModal(id) {
+        document.getElementById(id).style.display = 'none';
       }
-      noDataElem.style.display = anyVisible ? 'none' : 'block';
-    });
-
-    clearSearch.addEventListener('click', function() {
-      globalSearch.value = '';
-      clearSearch.style.display = 'none';
-      const items = document.querySelectorAll('.notifications-list li');
-      items.forEach(item => {
-        item.style.display = '';
+      function updateBadge(increment) {
+        const badge = document.getElementById('notifBadge');
+        let count = parseInt(badge.textContent) || 0;
+        count += increment;
+        if (count < 0) count = 0;
+        badge.textContent = count;
+      }
+      function addNotification() {
+        const title = document.getElementById('notifTitle').value.trim();
+        const message = document.getElementById('notifMessage').value.trim();
+        if (title && message) {
+          // Create new notification item
+          const list = document.querySelector('.notifications-list');
+          const li = document.createElement('li');
+          li.innerHTML = `
+            <div class="notification-content">
+              <i class="fas fa-bullhorn"></i> ${title}: ${message}
+            </div>
+            <div class="notification-actions">
+              <button class="btn-mark-read">Mark as Read</button>
+              <button class="btn-delete">Delete</button>
+            </div>
+          `;
+          // Add event listeners to buttons
+          li.querySelector('.btn-delete').addEventListener('click', function() {
+            li.remove();
+            updateBadge(-1); // Assuming deleted unread
+          });
+          li.querySelector('.btn-mark-read').addEventListener('click', function() {
+            li.style.opacity = '0.5';
+            this.disabled = true;
+            this.textContent = 'Read';
+            updateBadge(-1);
+          });
+          list.appendChild(li);
+          updateBadge(1); // New unread
+          alert('Notification added successfully!');
+          closeModal('addNotificationModal');
+          document.getElementById('notifTitle').value = '';
+          document.getElementById('notifMessage').value = '';
+        } else {
+          alert('Please fill all fields.');
+        }
+      }
+      // Attach events to existing buttons
+      document.addEventListener('DOMContentLoaded', function() {
+        const items = document.querySelectorAll('.notifications-list li');
+        items.forEach(li => {
+          const deleteBtn = li.querySelector('.btn-delete');
+          const readBtn = li.querySelector('.btn-mark-read');
+          deleteBtn.addEventListener('click', function() {
+            li.remove();
+            updateBadge(-1);
+          });
+          readBtn.addEventListener('click', function() {
+            li.style.opacity = '0.5';
+            this.disabled = true;
+            this.textContent = 'Read';
+            updateBadge(-1);
+          });
+        });
       });
-      const noDataElem = document.getElementById('noDataMessage');
-      if (noDataElem) noDataElem.style.display = 'none';
-      globalSearch.focus();
-    });
-
-    // Notification bell click
-    document.getElementById('notifBell').addEventListener('click', function() {
-      const badge = document.getElementById('notifBadge');
-      const count = parseInt(badge.textContent) || 0;
-      alert(`You have ${count} unread notifications.`);
-    });
-  </script>
+      // Search functionality
+      const globalSearch = document.getElementById('globalSearch');
+      const clearSearch = document.getElementById('clearSearch');
+      globalSearch.addEventListener('input', function() {
+        const query = this.value.toLowerCase();
+        clearSearch.style.display = query ? 'block' : 'none';
+        const items = document.querySelectorAll('.notifications-list li');
+        let anyVisible = false;
+        items.forEach(item => {
+          const text = item.textContent.toLowerCase();
+          const isVisible = text.includes(query);
+          item.style.display = isVisible ? '' : 'none';
+          if (isVisible) anyVisible = true;
+        });
+        // Show "No data found" message if no items visible
+        let noDataElem = document.getElementById('noDataMessage');
+        if (!noDataElem) {
+          noDataElem = document.createElement('div');
+          noDataElem.id = 'noDataMessage';
+          noDataElem.style.color = '#ffb800';
+          noDataElem.style.textAlign = 'center';
+          noDataElem.style.marginTop = '20px';
+          noDataElem.textContent = 'No notifications found.';
+          document.querySelector('.notifications-section').appendChild(noDataElem);
+        }
+        noDataElem.style.display = anyVisible ? 'none' : 'block';
+      });
+      clearSearch.addEventListener('click', function() {
+        globalSearch.value = '';
+        clearSearch.style.display = 'none';
+        const items = document.querySelectorAll('.notifications-list li');
+        items.forEach(item => {
+          item.style.display = '';
+        });
+        const noDataElem = document.getElementById('noDataMessage');
+        if (noDataElem) noDataElem.style.display = 'none';
+        globalSearch.focus();
+      });
+      // Notification bell click
+      document.getElementById('notifBell').addEventListener('click', function() {
+        const badge = document.getElementById('notifBadge');
+        const count = parseInt(badge.textContent) || 0;
+        alert(`You have ${count} unread notifications.`);
+      });
+    </script>
 </body>
 </html>

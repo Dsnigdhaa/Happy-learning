@@ -15,6 +15,8 @@
     <ul>
       <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
       <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+      <li><a href="students.html"><i class="fas fa-user-graduate"></i> Students</a></li>
+      <li><a href="trainers.html"><i class="fas fa-chalkboard-teacher"></i> Trainers</a></li>
       <li><a href="courses.html"><i class="fas fa-book"></i> Course management</a></li>
       <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
       <li><a href="recorded classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
@@ -40,43 +42,58 @@
           <input id="globalSearch" placeholder="Search students / trainers / courses..." style="padding-right: 35px;" />
           <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none;"></i>
         </div>
-        <div class="header-icons">
-          <img src="../assets/images/profile.png" alt="Profile" class="profile-icon" onclick="openProfileModal()">
-          <div class="notif" id="notifBell" title="Notifications (click)">
-            <i class="fas fa-bell"></i>
-            <span id="notifBadge" class="badge">0</span>
-          </div>
-          <button id="logoutBtn" class="logout">Logout</button>
+      <div class="header-icons">
+        <div class="notif" id="notifBell" title="Notifications (click)">
+          <i class="fas fa-bell"></i>
+          <span id="notifBadge" class="badge">0</span>
         </div>
+        <div class="profile-circle" onclick="openProfileModal()"></div>
+        <div class="profile-info">
+          Snigdha<br/><small>Administrator</small>
+        </div>
+        <button id="logoutBtn" class="logout">Logout</button>
+      </div>
       </div>
     </header>
 
     <!-- STATS -->
     <section class="stats" id="stats">
-      <div class="card">
-        <div class="card-title">👨‍🎓 Students</div>
-        <h3 id="studentCount">2</h3>
-      </div>
-      <div class="card">
-        <div class="card-title">👨‍🏫 Trainers</div>
-        <h3 id="trainerCount">2</h3>
-      </div>
-      <div class="card">
-        <div class="card-title">📚 Courses</div>
-        <h3 id="courseCount">3</h3>
-      </div>
-      <div class="card">
-        <div class="card-title">📝 Assignments</div>
-        <h3 id="assignmentCount">3</h3>
-      </div>
-      <div class="card">
-        <div class="card-title">📂 Materials</div>
-        <h3 id="materialCount">20</h3>
-      </div>
-      <div class="card">
-        <div class="card-title">🎥 Videos</div>
-        <h3 id="videoCount">18</h3>
-      </div>
+      <a href="students.html" class="card-link">
+        <div class="card">
+          <div class="card-title">👨‍🎓 Students</div>
+          <h3 id="studentCount">2</h3>
+        </div>
+      </a>
+      <a href="trainers.html" class="card-link">
+        <div class="card">
+          <div class="card-title">👨‍🏫 Trainers</div>
+          <h3 id="trainerCount">2</h3>
+        </div>
+      </a>
+      <a href="courses.html" class="card-link">
+        <div class="card">
+          <div class="card-title">📚 Courses</div>
+          <h3 id="courseCount">3</h3>
+        </div>
+      </a>
+      <a href="assignments.html" class="card-link">
+        <div class="card">
+          <div class="card-title">📝 Assignments</div>
+          <h3 id="assignmentCount">3</h3>
+        </div>
+      </a>
+      <a href="materials.html" class="card-link">
+        <div class="card">
+          <div class="card-title">📂 Materials</div>
+          <h3 id="materialCount">20</h3>
+        </div>
+      </a>
+      <a href="recorded classes.html" class="card-link">
+        <div class="card">
+          <div class="card-title">🎥 recorded classes</div>
+          <h3 id="videoCount">18</h3>
+        </div>
+      </a>
     </section>
 
     <!-- QUICK ACTIONS -->
@@ -85,9 +102,20 @@
       <button onclick="openAddModal('trainer')">➕ Add Trainer</button>
       <button onclick="openAddModal('course')">➕ Add Course</button>
       <button onclick="openAddModal('material')">➕ Add Material</button>
-      <button onclick="openAddModal('video')">➕ Add Video</button>
+      <button onclick="openAddModal('recorded')">➕ Add recorded classes</button>
       <button onclick="openAddModal('assignment')">➕ Add Assignment</button>
       <button onclick="openAddModal('holiday')">➕ Add Holiday</button>
+      <!-- Combined Export Button -->
+      <div style="display: inline-block; margin-left: 20px; position: relative; z-index: 1000;">
+        <button id="combinedExportBtn">Export Data ▼</button>
+        <div id="exportOptions" style="display:none; position: absolute; background: white; border: 1px solid #ccc; padding: 5px; right: 0; z-index: 1000;">
+          <button onclick="exportStudentsAttendance()">Export Student Attendance</button><br/>
+          <button onclick="exportTrainersAttendance()">Export Trainer Attendance</button><br/>
+          <button onclick="exportAssignments()">Export Assignments</button><br/>
+          <button onclick="exportRecordedClasses()">Export Recorded Classes</button><br/>
+          <button onclick="exportLiveClasses()">Export Live Classes</button>
+        </div>
+      </div>
     </section>
 
     <!-- TOP COURSES + ASSIGNMENTS (left), RECENT + HOLIDAYS (right) -->
@@ -98,40 +126,41 @@
       </div>
       <div class="table-container">
         <h3>Assignments</h3>
-        <div style="overflow:auto;">
-        <div style="position: relative; display: inline-block; width: 100%;">
-          <input id="assignmentSearch" placeholder="Search assignments..." class="mini-search" style="padding-right: 35px; width: 100%;" />
-          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
-        </div>
-          <table id="assignmentTable">
-            <thead><tr><th>Title</th><th>Course</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
-            <tbody></tbody>
-          </table>
-        </div>
+      <!-- Removed individual export button for assignments -->
+      <div style="overflow:auto;">
+      <div style="position: relative; display: inline-block; width: 100%;">
+        <input id="assignmentSearch" placeholder="Search assignments..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+        <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
       </div>
+        <table id="assignmentTable">
+          <thead><tr><th>Title</th><th>Course</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
+          <tbody></tbody>
+        </table>
+      </div>
+    </div>
     </div>
 
     <!-- Attendance -->
     <div class="section">
       <div class="table-container">
-        <h3>Students Attendance</h3>
-        <div style="position: relative; display: inline-block; width: 100%;">
-          <input id="studentSearch" placeholder="Search students..." class="mini-search" style="padding-right: 35px; width: 100%;" />
-          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
-        </div>
+      <h3>Students Attendance</h3>
+      <div style="position: relative; display: inline-block; width: 100%;">
+        <input id="studentSearch" placeholder="Search students..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+        <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+      </div>
         <table id="studentTable">
-          <thead><tr><th>Name</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Name</th><th>Age</th><th>Qualification</th><th>Location</th><th>Course</th><th>Date of Joining</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
       <div class="table-container">
-        <h3>Trainers Attendance</h3>
-        <div style="position: relative; display: inline-block; width: 100%;">
-          <input id="trainerSearch" placeholder="Search trainers..." class="mini-search" style="padding-right: 35px; width: 100%;" />
-          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
-        </div>
+      <h3>Trainers Attendance</h3>
+      <div style="position: relative; display: inline-block; width: 100%;">
+        <input id="trainerSearch" placeholder="Search trainers..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+        <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
+      </div>
         <table id="trainerTable">
-          <thead><tr><th>Name</th><th>Course</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Name</th><th>Age</th><th>Qualification</th><th>Location</th><th>Experience</th><th>Course</th><th>Date of Joining</th><th>Status</th><th>Actions</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
@@ -141,6 +170,7 @@
     <div class="section">
       <div class="table-container">
         <h3>Recorded Classes</h3>
+        <!-- Removed individual export button for recorded classes -->
         <div style="position: relative; display: inline-block; width: 100%;">
           <input id="recordedSearch" placeholder="Search recorded classes..." class="mini-search" style="padding-right: 35px; width: 100%;" />
           <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
@@ -152,23 +182,39 @@
       </div>
       <div class="table-container">
         <h3>Live Classes</h3>
-        <div style="position: relative; display: inline-block; width: 100%;">
-          <input id="liveSearch" placeholder="Search live classes..." class="mini-search" style="padding-right: 35px; width: 100%;" />
-          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
-        </div>
-        <table id="liveTable">
-          <thead><tr><th>Title</th><th>Trainer</th><th>Date</th><th>Join</th><th>Actions</th></tr></thead>
-          <tbody></tbody>
-        </table>
+      <!-- Removed individual export button for live classes -->
+      <div style="position: relative; display: inline-block; width: 100%;">
+        <input id="liveSearch" placeholder="Search live classes..." class="mini-search" style="padding-right: 35px; width: 100%;" />
+        <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
       </div>
+      <table id="liveTable">
+        <thead><tr><th>Title</th><th>Trainer</th><th>Date</th><th>Join</th><th>Actions</th></tr></thead>
+        <tbody></tbody>
+      </table>
+    </div>
     </div>
 
     <!-- Recent activities & Holidays & Notifications -->
     <div class="section">
+      <div class="pending-approvals">
+        <h3>Pending Approvals</h3>
+        <table id="pendingTasksTable">
+          <thead>
+            <tr><th>Task</th><th>Type</th><th>Date</th><th>Action</th></tr>
+          </thead>
+          <tbody>
+
+
+            <!-- Pending tasks will be populated here -->
+          </tbody>
+        </table>
+      </div>
       <div class="recent-activity">
         <h3>Recent Activity</h3>
         <ul id="activityList"></ul>
       </div>
+
+
       <div class="calendar">
         <h3>Holidays</h3>
         <ul id="holidaysList"></ul>
@@ -182,8 +228,19 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('modalStudent')">&times;</span>
       <h3 id="modalStudentTitle">Add Student</h3>
+      <label for="m_studentName">Name</label>
       <input id="m_studentName" placeholder="Name" />
+      <label for="m_studentAge">Age</label>
+      <input id="m_studentAge" type="number" min="1" placeholder="Age" />
+      <label for="m_studentQualification">Qualification</label>
+      <input id="m_studentQualification" placeholder="Qualification" />
+      <label for="m_studentLocation">Location</label>
+      <input id="m_studentLocation" placeholder="Location" />
+      <label for="m_studentCourse">Course</label>
       <input id="m_studentCourse" placeholder="Course" />
+      <label for="m_studentDateOfJoining">Date of Joining</label>
+      <input id="m_studentDateOfJoining" type="date" />
+      <label for="m_studentStatus">Status</label>
       <select id="m_studentStatus">
         <option value="Present">Present</option>
         <option value="Absent">Absent</option>
@@ -198,8 +255,21 @@
     <div class="modal-content">
       <span class="close-btn" onclick="closeModal('modalTrainer')">&times;</span>
       <h3 id="modalTrainerTitle">Add Trainer</h3>
+      <label for="m_trainerName">Name</label>
       <input id="m_trainerName" placeholder="Name" />
+      <label for="m_trainerAge">Age</label>
+      <input id="m_trainerAge" type="number" min="1" placeholder="Age" />
+      <label for="m_trainerQualification">Qualification</label>
+      <input id="m_trainerQualification" placeholder="Qualification" />
+      <label for="m_trainerLocation">Location</label>
+      <input id="m_trainerLocation" placeholder="Location" />
+      <label for="m_trainerExperience">Previous Experience</label>
+      <input id="m_trainerExperience" placeholder="Previous Experience" />
+      <label for="m_trainerCourse">Course / Expertise</label>
       <input id="m_trainerCourse" placeholder="Course / Expertise" />
+      <label for="m_trainerDateOfJoining">Date of Joining</label>
+      <input id="m_trainerDateOfJoining" type="date" />
+      <label for="m_trainerStatus">Status</label>
       <select id="m_trainerStatus">
         <option value="Present">Present</option>
         <option value="Absent">Absent</option>
@@ -222,18 +292,21 @@
     </div>
   </div>
 
-  <!-- Recorded Modal -->
-  <div class="modal" id="modalRecorded">
-    <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalRecorded')">&times;</span>
-      <h3 id="modalRecordedTitle">Add Recorded Class</h3>
-      <input id="m_recordedTitle" placeholder="Title" />
-      <input id="m_recordedCourse" placeholder="Course" />
-      <input id="m_recordedLink" placeholder="YouTube Link (full URL)" />
-      <div style="height:10px"></div>
-      <button id="modalRecordedSave">Save</button>
+    <!-- Recorded Modal -->
+    <div class="modal" id="modalRecorded">
+      <div class="modal-content">
+        <span class="close-btn" onclick="closeModal('modalRecorded')">&times;</span>
+        <h3 id="modalRecordedTitle">Add Recorded Class</h3>
+        <label for="m_recordedTitle">Title</label>
+        <input id="m_recordedTitle" placeholder="Title" />
+        <label for="m_recordedCourse">Course</label>
+        <input id="m_recordedCourse" placeholder="Course" />
+        <label for="m_recordedLink">YouTube Link (full URL)</label>
+        <input id="m_recordedLink" placeholder="YouTube Link (full URL)" />
+        <div style="height:10px"></div>
+        <button id="modalRecordedSave">Save</button>
+      </div>
     </div>
-  </div>
 
   <!-- Live Modal -->
   <div class="modal" id="modalLive">
@@ -291,6 +364,31 @@
     </div>
   </div>
 
+  <!-- Individual Attendance Modal -->
+  <div class="modal" id="modalIndividualAttendance">
+    <div class="modal-content" style="max-width: 800px;">
+      <span class="close-btn" onclick="closeModal('modalIndividualAttendance')">&times;</span>
+      <h3 id="individualAttendanceTitle">Monthly Attendance</h3>
+      <div class="date-picker" style="margin-bottom: 20px;">
+        <label for="attendanceMonth">Select Month: </label>
+        <input type="month" id="attendanceMonth" />
+      </div>
+      <div class="attendance-container" style="padding: 0;">
+        <table class="attendance-table" id="individualAttendanceTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Status</th>
+            </tr>
+          </thead>
+          <tbody id="individualAttendanceBody">
+            <!-- Rows will be populated by JS -->
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+
   <!-- Notifications Modal -->
   <div class="modal" id="modalNotifications">
     <div class="modal-content">
@@ -304,47 +402,8 @@
     </div>
   </div>
 
-  <!-- Students -->
-  <div class="table-container">
-    <h3>Students Attendance</h3>
-    <table id="studentsTable">
-      <thead>
-        <tr><th>Name</th><th>Course</th><th>Status</th><th>Action</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>John Doe</td><td>Mathematics</td><td>Active</td>
-          <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
-        </tr>
-        <tr>
-          <td>Jane Smith</td><td>Biology</td><td>Active</td>
-          <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <!-- Trainers -->
-  <div class="table-container">
-    <h3>Trainers Attendance</h3>
-    <table id="trainersTable">
-      <thead>
-        <tr><th>Name</th><th>Course</th><th>Status</th><th>Action</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>Mr. Alex</td><td>Physics</td><td>Active</td>
-          <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
-        </tr>
-        <tr>
-          <td>Ms. Emma</td><td>Chemistry</td><td>On Leave</td>
-          <td><button class="delete-btn" onclick="deleteRow(this)">Delete</button></td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
   <script src="../assets/js/dashboard.js"></script>
   <script src="../assets/js/admin.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </body>
 </html>

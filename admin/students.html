@@ -4,9 +4,11 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>Students Management - Admin</title>
-  <link rel="stylesheet" href="../assets/css/style.css" />
+  <link rel="stylesheet" href="../assets/css/admin.css" />
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
   <script src="../assets/js/student.js" defer></script>
+  <script src="../assets/js/admin.js"></script>
+  <script src="../assets/js/auth.js"></script>
 </head>
 <body class="admin">
   <!-- SIDEBAR -->
@@ -14,8 +16,10 @@
     <h2>Happy Learning</h2>
     <img src="../assets/images/logo.png" alt="Happy Learning Logo" class="sidebar-logo">
     <ul>
-      <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+      <li><a href="dashboard.html"><i class="fas fa-home"></i> Dashboard</a></li>
       <li><a href="users.html"><i class="fas fa-users"></i> Users</a></li>
+      <li><a href="students.html" class="active"><i class="fas fa-user-graduate"></i> Students</a></li>
+      <li><a href="trainers.html"><i class="fas fa-chalkboard-teacher"></i> Trainers</a></li>
       <li><a href="courses.html"><i class="fas fa-book"></i> Course management</a></li>
       <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
       <li><a href="recorded classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
@@ -32,13 +36,29 @@
 
   <!-- Main Content -->
   <div class="main-content">
+    <!-- HEADER -->
     <header>
-      <div class="logo">👨‍🎓 Students Management</div>
-      <div class="user-menu">
-        <img src="../assets/images/avatar.png" alt="Admin Avatar" />
-        <span>Admin</span>
+      <button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button>
+      <h1>Students</h1>
+      <div class="header-right">
+        <div class="search-bar" style="position: relative; display: inline-block;">
+          <input id="searchInput" placeholder="Search students..." style="padding-right: 35px;" />
+          <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none;"></i>
+        </div>
+      <div class="header-icons">
+        <div class="notif" id="notifBell" title="Notifications (click)">
+          <i class="fas fa-bell"></i>
+          <span id="notifBadge" class="badge">0</span>
+        </div>
+        <div class="profile-circle" onclick="openProfileModal()"></div>
+        <div class="profile-info">
+          Snigdha<br/><small>Administrator</small>
+        </div>
+        <button id="logoutBtn" class="logout">Logout</button>
+      </div>
       </div>
     </header>
+
 
     <!-- Summary Cards -->
     <div class="cards">
@@ -65,7 +85,7 @@
         <button class="btn-primary" onclick="openModal()">Add Student</button>
         <input
           type="text"
-          id="searchInput"
+          id="tableSearch"
           placeholder="Search by name or email..."
           style="padding: 8px 12px; border-radius: 8px; border: 1px solid #ccc; width: 250px;"
         />
@@ -76,6 +96,7 @@
             <th>Name</th>
             <th>Email</th>
             <th>Course</th>
+            <th>Date of Joining</th>
             <th>Status</th>
             <th>Actions</th>
           </tr>
@@ -103,6 +124,10 @@
         <div style="margin-bottom: 10px;">
           <label for="studentCourse">Course</label>
           <input type="text" id="studentCourse" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        </div>
+        <div style="margin-bottom: 10px;">
+          <label for="studentDateOfJoining">Date of Joining</label>
+          <input type="date" id="studentDateOfJoining" required style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
         </div>
         <div style="margin-bottom: 10px;">
           <label for="studentStatus">Status</label>
