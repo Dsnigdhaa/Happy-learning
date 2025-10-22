@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>My Attendance - Student - Happy Learning</title>
+  <link rel="stylesheet" href="../assets/css/admin.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+</head>
+<body>
+  <aside class="sidebar" id="sidebar">
+    <h2>Happy Learning - Student</h2>
+    <img src="../assets/images/logo.png" alt="Happy Learning Logo" class="sidebar-logo" />
+    <ul>
+      <li><a href="dashboard.html"><i class="fas fa-home"></i> Student Dashboard</a></li>
+      <li><a href="my-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
+      <li><a href="my-assignments.html"><i class="fas fa-file-alt"></i> My Assignments</a></li>
+      <li><a href="my-attendance.html" class="active"><i class="fas fa-calendar-check"></i> My Attendance</a></li>
+      <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
+      <li><a href="live-classes.html"><i class="fas fa-video"></i> Live Classes</a></li>
+      <li><a href="recorded-classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
+      <li><a href="settings.html"><i class="fas fa-cog"></i> Settings</a></li>
+    </ul>
+  </aside>
+
+  <main class="main-content">
+    <header>
+      <button id="menuBtn" class="menu-btn"><i class="fas fa-bars"></i></button>
+      <h1>My Attendance</h1>
+      <div class="header-right">
+        <button id="logoutBtn" class="logout">Logout</button>
+      </div>
+    </header>
+
+    <section class="section">
+      <h2>My Attendance Record</h2>
+      <div class="form-group" style="max-width: 300px; margin-bottom: 20px;">
+        <label for="monthFilter" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Month:</label>
+        <input type="month" id="monthFilter" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+      </div>
+      <div class="table-container">
+        <table id="attendanceTable">
+          <thead>
+            <tr>
+              <th>Date</th>
+              <th>Course</th>
+              <th>Status</th>
+              <th>Time</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>2024-10-01</td>
+              <td>Mathematics</td>
+              <td>Present</td>
+              <td>9:00 AM</td>
+            </tr>
+            <tr>
+              <td>2024-10-02</td>
+              <td>Science</td>
+              <td>Present</td>
+              <td>10:00 AM</td>
+            </tr>
+            <tr>
+              <td>2024-10-03</td>
+              <td>Mathematics</td>
+              <td>Absent</td>
+              <td>-</td>
+            </tr>
+            <tr>
+              <td>2024-10-04</td>
+              <td>Science</td>
+              <td>Present</td>
+              <td>11:00 AM</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+      <div style="margin-top: 20px;">
+        <h3>Attendance Summary</h3>
+        <p>Total Days: 30</p>
+        <p>Present: 28</p>
+        <p>Absent: 2</p>
+        <p>Attendance Percentage: 93.33%</p>
+      </div>
+    </section>
+  </main>
+
+  <script>
+    // Sidebar toggle
+    document.getElementById('menuBtn').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('active');
+    });
+
+    // Logout button
+    document.getElementById('logoutBtn').addEventListener('click', () => {
+      localStorage.removeItem('studentLoggedIn');
+      localStorage.removeItem('studentUsername');
+      window.location.href = '../student/student-login.html';
+    });
+
+    // Set default month to current month
+    document.getElementById('monthFilter').value = new Date().toISOString().slice(0, 7);
+
+    // Filter attendance by month (in a real app, this would filter the data)
+    document.getElementById('monthFilter').addEventListener('change', (e) => {
+      const selectedMonth = e.target.value;
+      alert(`Filtering attendance for ${selectedMonth}`);
+      // Implement filtering logic
+    });
+  </script>
+</body>
+</html>

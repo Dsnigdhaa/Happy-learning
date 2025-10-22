@@ -1,9 +1,9 @@
 // Complaints management for admin
 let complaints = JSON.parse(localStorage.getItem('complaints')) || [];
 
-// Initialize with sample data if empty
-if (complaints.length === 0) {
-  complaints = [
+// Initialize with sample data if fewer than 10 complaints exist
+if (complaints.length < 10) {
+  const additionalComplaints = [
     {
       submitted_by: 'student',
       student: 'John Doe',
@@ -129,8 +129,88 @@ if (complaints.length === 0) {
       complaint: 'Assignment submission deadlines are not clearly communicated.',
       date: '2023-10-14',
       status: 'pending'
+    },
+    // New additional diverse complaints
+    {
+      submitted_by: 'student',
+      student: 'Grace Hopper',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Mobile app crashes frequently on iOS devices.',
+      date: '2024-01-15',
+      status: 'pending'
+    },
+    {
+      submitted_by: 'student',
+      student: 'Henry Ford',
+      type: 'trainer',
+      trainer: 'Dr. Gupta',
+      complaint: 'Trainer skips important topics in recorded classes.',
+      date: '2024-01-16',
+      status: 'resolved'
+    },
+    {
+      submitted_by: 'student',
+      student: 'Isabella Martinez',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Accessibility features like screen reader support are missing.',
+      date: '2024-01-17',
+      status: 'pending'
+    },
+    {
+      submitted_by: 'trainer',
+      student: 'Mr. Nguyen',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Student progress reports are not exporting correctly.',
+      date: '2024-01-18',
+      status: 'pending'
+    },
+    {
+      submitted_by: 'student',
+      student: 'Jack Ryan',
+      type: 'trainer',
+      trainer: 'Ms. Chen',
+      complaint: 'Trainer provides inconsistent grading on quizzes.',
+      date: '2024-01-19',
+      status: 'pending'
+    },
+    {
+      submitted_by: 'trainer',
+      student: 'Prof. Singh',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Integration with third-party tools like Zoom is buggy.',
+      date: '2024-01-20',
+      status: 'resolved'
+    },
+    {
+      submitted_by: 'student',
+      student: 'Kara Danvers',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Login page has security vulnerabilities; password reset fails.',
+      date: '2024-01-21',
+      status: 'pending'
+    },
+    {
+      submitted_by: 'trainer',
+      student: 'Ms. Rodriguez',
+      type: 'platform',
+      trainer: '',
+      complaint: 'Forum moderation tools are inadequate for large classes.',
+      date: '2024-01-22',
+      status: 'pending'
     }
   ];
+  // Append new complaints if not already present
+  const existingComplaints = new Set(complaints.map(c => JSON.stringify(c)));
+  additionalComplaints.forEach(complaint => {
+    if (!existingComplaints.has(JSON.stringify(complaint))) {
+      complaints.push(complaint);
+    }
+  });
   localStorage.setItem('complaints', JSON.stringify(complaints));
 }
 
