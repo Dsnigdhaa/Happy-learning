@@ -94,6 +94,14 @@
   </main>
 
   <script>
+    // Mapping of recorded class titles to video URLs (matching admin recorded classes)
+    const recordedClassVideos = {
+      "Introduction to Algebra": "https://www.youtube.com/watch?v=W6NZfCO5SIk",
+      "Basic Geometry": "https://www.youtube.com/watch?v=_uQrJ0TkZlc",
+      "Chemistry Fundamentals": "https://www.youtube.com/watch?v=mU6anWqZJcc",
+      "Biology Basics": "https://www.youtube.com/watch?v=Ke90Tje7VS0"
+    };
+
     // Sidebar toggle
     document.getElementById('menuBtn').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('active');
@@ -107,8 +115,12 @@
     });
 
     function watchRecordedClass(title) {
-      alert(`Watching recorded class: ${title}`);
-      // In a real app, this would open the video player
+      const videoUrl = recordedClassVideos[title];
+      if (videoUrl) {
+        window.open(videoUrl, '_blank');
+      } else {
+        alert('Video not found for: ' + title);
+      }
     }
 
     // Filter recorded classes by course

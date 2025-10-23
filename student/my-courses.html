@@ -80,8 +80,7 @@
     });
 
     function viewCourseDetails(courseName) {
-      alert(`Viewing details for ${courseName}`);
-      // Implement course details view
+      window.location.href = `course-details.html?title=${encodeURIComponent(courseName)}`;
     }
   </script>
 </body>

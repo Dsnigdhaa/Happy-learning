@@ -1,2 +1,5 @@
-- [x] Add modals for material, live-class, recorded-class in trainer/dashboard.html
-- [x] Add save functions for material, live-class, recorded-class in trainer/trainer-dashboard.js
+- [x] Add sample attendance data array for multiple months in student/my-attendance.html
+- [x] Implement filtering logic in the monthFilter change event to update table and summary
+- [x] Add "View Attendance" button next to month selector
+- [x] Move filtering logic to button click event
+- [x] Add calendar view to display attendance with calendar dates

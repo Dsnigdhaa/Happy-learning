@@ -35,58 +35,84 @@
     <section class="section">
       <h2>My Attendance Record</h2>
       <div class="form-group" style="max-width: 300px; margin-bottom: 20px;">
-        <label for="monthFilter" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Month:</label>
-        <input type="month" id="monthFilter" style="width: 100%; padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
+        <label for="attendanceDate" style="font-weight: 600; display: block; margin-bottom: 5px;">Select Date:</label>
+        <input type="date" id="attendanceDate" style="padding: 8px; border: 1px solid #ccc; border-radius: 4px;" />
       </div>
+      <div id="message" style="margin-bottom: 10px; font-weight: bold;"></div>
+      <div id="attendanceStats" style="display: flex; gap: 20px; margin-bottom: 20px;"></div>
       <div class="table-container">
         <table id="attendanceTable">
           <thead>
             <tr>
-              <th>Date</th>
               <th>Course</th>
               <th>Status</th>
               <th>Time</th>
             </tr>
           </thead>
-          <tbody>
-            <tr>
-              <td>2024-10-01</td>
-              <td>Mathematics</td>
-              <td>Present</td>
-              <td>9:00 AM</td>
-            </tr>
-            <tr>
-              <td>2024-10-02</td>
-              <td>Science</td>
-              <td>Present</td>
-              <td>10:00 AM</td>
-            </tr>
-            <tr>
-              <td>2024-10-03</td>
-              <td>Mathematics</td>
-              <td>Absent</td>
-              <td>-</td>
-            </tr>
-            <tr>
-              <td>2024-10-04</td>
-              <td>Science</td>
-              <td>Present</td>
-              <td>11:00 AM</td>
-            </tr>
+          <tbody id="attendanceTableBody">
+            <!-- Attendance data will be populated dynamically -->
           </tbody>
         </table>
-      </div>
-      <div style="margin-top: 20px;">
-        <h3>Attendance Summary</h3>
-        <p>Total Days: 30</p>
-        <p>Present: 28</p>
-        <p>Absent: 2</p>
-        <p>Attendance Percentage: 93.33%</p>
       </div>
     </section>
   </main>
 
   <script>
+    // Get logged-in student username
+    const studentUsername = localStorage.getItem('studentUsername');
+
+    // Set default date to today
+    const attendanceDateInput = document.getElementById('attendanceDate');
+    const attendanceStats = document.getElementById('attendanceStats');
+    const attendanceTableBody = document.getElementById('attendanceTableBody');
+
+    attendanceDateInput.valueAsDate = new Date();
+
+    function getAttendanceKey(date) {
+      return `attendance_${date}`;
+    }
+
+    function loadAttendance() {
+      const date = attendanceDateInput.value;
+      if (!date) return;
+
+      const savedData = localStorage.getItem(getAttendanceKey(date));
+      let attendanceData = { students: {}, trainers: {} };
+
+      if (savedData) {
+        attendanceData = JSON.parse(savedData);
+      }
+
+      // Populate stats
+      populateStats(attendanceData);
+
+      // Populate table
+      populateTable(attendanceData);
+    }
+
+    function populateStats(data) {
+      const isPresent = data.students[studentUsername] || false;
+      const status = isPresent ? 'Present' : 'Absent';
+    }
+
+    function populateTable(data) {
+      attendanceTableBody.innerHTML = '';
+
+      const isPresent = data.students[studentUsername] || false;
+      const status = isPresent ? 'Present' : 'Absent';
+      const time = isPresent ? 'N/A' : '-';
+      const course = 'General'; // Default course
+
+      const row = `
+        <tr>
+          <td>${course}</td>
+          <td>${attendance}<span class="status ${status.toLowerCase()}">${status}</span></td>
+          <td>${time}</td>
+        </tr>
+      `;
+      attendanceTableBody.insertAdjacentHTML('beforeend', row);
+    }
+
     // Sidebar toggle
     document.getElementById('menuBtn').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('active');
@@ -99,15 +125,16 @@
       window.location.href = '../student/student-login.html';
     });
 
-    // Set default month to current month
-    document.getElementById('monthFilter').value = new Date().toISOString().slice(0, 7);
-
-    // Filter attendance by month (in a real app, this would filter the data)
-    document.getElementById('monthFilter').addEventListener('change', (e) => {
-      const selectedMonth = e.target.value;
-      alert(`Filtering attendance for ${selectedMonth}`);
-      // Implement filtering logic
+    // Load attendance for default date on page load
+    document.addEventListener('DOMContentLoaded', () => {
+      if (!studentUsername) {
+        document.getElementById('message').textContent = 'No student logged in. Please log in to view attendance.';
+        return;
+      }
+      loadAttendance();
     });
+
+    attendanceDateInput.addEventListener('change', loadAttendance);
   </script>
 </body>
 </html>

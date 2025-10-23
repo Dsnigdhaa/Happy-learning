@@ -89,6 +89,17 @@
   </main>
 
   <script>
+    // Mapping of material titles to file paths
+    const materialFiles = {
+      "Math Formulas": "../assets/files/math-formulas.pdf",
+      "Science Notes": "../assets/files/science-notes.docx",
+      "History Timeline": "../assets/files/history-timeline.ppt",
+      "Physics Equations": "../assets/files/physics-equations.pdf",
+      "Chemistry Handbook": "../assets/files/chemistry-handbook.docx",
+      "Biology Diagrams": "../assets/files/biology-diagrams.ppt",
+      "CS Tutorials": "../assets/files/cs-tutorials.pdf"
+    };
+
     // Sidebar toggle
     document.getElementById('menuBtn').addEventListener('click', () => {
       document.getElementById('sidebar').classList.toggle('active');
@@ -102,8 +113,17 @@
     });
 
     function downloadMaterial(title) {
-      alert(`Downloading ${title}...`);
-      // In a real app, this would trigger a file download
+      const filePath = materialFiles[title];
+      if (filePath) {
+        const link = document.createElement('a');
+        link.href = filePath;
+        link.download = title.replace(/\s+/g, '-').toLowerCase() + '.' + filePath.split('.').pop();
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+      } else {
+        alert('File not found for: ' + title);
+      }
     }
 
     // Filter materials by course

@@ -99,8 +99,7 @@
     });
 
     function viewAssignment(title) {
-      alert(`Viewing assignment: ${title}`);
-      // Implement assignment view
+      window.location.href = `assignment-details.html?title=${encodeURIComponent(title)}`;
     }
 
     function submitAssignment(title) {

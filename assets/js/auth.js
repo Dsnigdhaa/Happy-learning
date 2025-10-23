@@ -74,4 +74,20 @@ document.addEventListener('DOMContentLoaded', function() {
             window.location.href = '/login.html';
         });
     }
+
+    // Check if admin is logged in, redirect to login if not
+    if (window.location.pathname.includes('admin/dashboard.html')) {
+        const isLoggedIn = localStorage.getItem('adminLoggedIn');
+        if (!isLoggedIn) {
+            window.location.href = '/login.html';
+        } else {
+            // Update profile info
+            const username = localStorage.getItem('adminUsername') || 'Admin';
+            const displayName = username.charAt(0).toUpperCase() + username.slice(1);
+            const profileInfo = document.getElementById('profileInfo');
+            if (profileInfo) {
+                profileInfo.innerHTML = `${displayName}<br/><small>Administrator</small>`;
+            }
+        }
+    }
 });
