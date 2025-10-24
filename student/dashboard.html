@@ -16,7 +16,6 @@
       <li><a href="dashboard.html" class="active"><i class="fas fa-home"></i> Student Dashboard</a></li>
       <li><a href="my-courses.html"><i class="fas fa-book"></i> My Courses</a></li>
       <li><a href="my-assignments.html"><i class="fas fa-file-alt"></i> My Assignments</a></li>
-      <li><a href="my-attendance.html"><i class="fas fa-calendar-check"></i> My Attendance</a></li>
       <li><a href="materials.html"><i class="fas fa-folder"></i> Materials</a></li>
       <li><a href="live-classes.html"><i class="fas fa-video"></i> Live Classes</a></li>
       <li><a href="recorded-classes.html"><i class="fas fa-video"></i> Recorded Classes</a></li>
@@ -69,12 +68,7 @@
           <h3 id="assignmentCount">5</h3>
         </div>
       </a>
-      <a href="my-attendance.html" class="card-link">
-        <div class="card">
-          <div class="card-title"><i class="fas fa-calendar-check"></i> Attendance</div>
-          <h3 id="attendanceCount">95%</h3>
-        </div>
-      </a>
+
       <a href="materials.html" class="card-link">
         <div class="card">
           <div class="card-title"><i class="fas fa-folder"></i> Materials</div>
@@ -99,18 +93,9 @@
     <section class="quick-actions">
       <button onclick="openModal('assignment')" title="Submit your completed assignment"><i class="fas fa-upload"></i> Submit Assignment</button>
       <button onclick="openModal('material')" title="Download course materials"><i class="fas fa-download"></i> Download Material</button>
-      <button onclick="openModal('live-class')" title="Join an upcoming live class"><i class="fas fa-video-camera"></i> Join Live Class</button>
-      <button onclick="openModal('recorded-class')" title="Watch previously recorded classes"><i class="fas fa-play-circle"></i> Watch Recorded Class</button>
+      <button onclick="openModal('liveclass')" title="Join an upcoming live class"><i class="fas fa-video-camera"></i> Join Live Class</button>
+      <button onclick="openModal('recordedclass')" title="Watch previously recorded classes"><i class="fas fa-play-circle"></i> Watch Recorded Class</button>
       <button onclick="openModal('feedback')" title="Provide feedback on your learning experience"><i class="fas fa-comments"></i> Give Feedback</button>
-      <!-- Combined Export Button -->
-      <div style="display: inline-block; margin-left: 20px; position: relative; z-index: 1000;">
-        <button id="combinedExportBtn" title="Export your data"><i class="fas fa-file-export"></i> Export Data ▼</button>
-        <div id="exportOptions" style="display:none; position: absolute; background: white; border: 1px solid #ccc; padding: 5px; right: 0; z-index: 1000;">
-          <button onclick="exportMyAssignments()"><i class="fas fa-file-alt"></i> Export Assignments</button><br/>
-          <button onclick="exportMyAttendance()"><i class="fas fa-calendar-check"></i> Export Attendance</button><br/>
-          <button onclick="exportMyCourses()"><i class="fas fa-book"></i> Export Courses</button>
-        </div>
-      </div>
     </section>
 
     <!-- TOP COURSES + ASSIGNMENTS (left), RECENT + HOLIDAYS (right) -->
@@ -128,27 +113,14 @@
         <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
       </div>
         <table id="assignmentTable">
-          <thead><tr><th>Title</th><th>Course</th><th>Due</th><th>Status</th><th>Actions</th></tr></thead>
+          <thead><tr><th>Title</th><th>Course</th><th>Due</th><th>Status</th><th>Progress</th><th>Score</th></tr></thead>
           <tbody></tbody>
         </table>
       </div>
     </div>
     </div>
 
-    <!-- Attendance -->
-    <div class="section">
-      <div class="table-container">
-      <h3>My Attendance</h3>
-      <div style="position: relative; display: inline-block; width: 100%;">
-        <input id="attendanceSearch" placeholder="Search attendance..." class="mini-search" style="padding-right: 35px; width: 100%;" />
-        <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
-      </div>
-        <table id="attendanceTable">
-          <thead><tr><th>Date</th><th>Status</th><th>Course</th><th>Actions</th></tr></thead>
-          <tbody></tbody>
-        </table>
-      </div>
-    </div>
+
 
     <!-- Student Phase Recordings (Edureka-like format) -->
     <div class="section">
@@ -185,7 +157,7 @@
         <i class="fas fa-search" style="position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #666; pointer-events: none; font-size: 12px;"></i>
       </div>
       <table id="liveTable">
-        <thead><tr><th>Title</th><th>Trainer</th><th>Date</th><th>Join</th><th>Actions</th></tr></thead>
+        <thead><tr><th>Title</th><th>Trainer</th><th>Date</th><th>Join</th></tr></thead>
         <tbody></tbody>
       </table>
     </div>
@@ -208,21 +180,8 @@
 
     <!-- Recent activities & Holidays & Notifications -->
     <div class="section">
-      <div class="pending-approvals">
-        <h3><i class="fas fa-clock"></i> Pending Approvals</h3>
-        <table id="pendingTasksTable">
-          <thead>
-            <tr><th>Task</th><th>Type</th><th>Date</th><th>Action</th></tr>
-          </thead>
-          <tbody>
-            <!-- Pending tasks will be populated here -->
-          </tbody>
-        </table>
-      </div>
-      <div class="recent-activity">
-        <h3><i class="fas fa-history"></i> Recent Activity</h3>
-        <ul id="activityList"></ul>
-      </div>
+
+
       <div class="calendar">
         <h3><i class="fas fa-calendar-alt"></i> Upcoming Holidays</h3>
         <ul id="holidaysList"></ul>
@@ -234,7 +193,7 @@
   <!-- Submit Assignment Modal -->
   <div class="modal" id="modalAssignment">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalAssignment')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('assignment')" title="Close">&times;</span>
       <h3><i class="fas fa-upload"></i> Submit Assignment</h3>
       <form class="form-row">
         <label for="assignmentTitle">Assignment Title</label>
@@ -249,7 +208,7 @@
         <textarea id="assignmentNotes" placeholder="Add any additional notes or comments..."></textarea>
       </form>
       <div class="form-actions">
-        <button onclick="submitAssignment()" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Assignment</button>
+        <button onclick="submitAssignmentForm()" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Assignment</button>
       </div>
     </div>
   </div>
@@ -257,7 +216,7 @@
   <!-- Download Material Modal -->
   <div class="modal" id="modalMaterial">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalMaterial')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('material')" title="Close">&times;</span>
       <h3><i class="fas fa-download"></i> Download Material</h3>
       <form class="form-row">
         <label for="materialTitle">Material Title</label>
@@ -272,7 +231,7 @@
   <!-- Join Live Class Modal -->
   <div class="modal" id="modalLiveclass">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalLiveclass')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('liveclass')" title="Close">&times;</span>
       <h3><i class="fas fa-video-camera"></i> Join Live Class</h3>
       <form class="form-row">
         <label for="liveClassTitle">Class Title</label>
@@ -287,14 +246,14 @@
   <!-- Watch Recorded Class Modal -->
   <div class="modal" id="modalRecordedclass">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalRecordedclass')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('recordedclass')" title="Close">&times;</span>
       <h3><i class="fas fa-play-circle"></i> Watch Recorded Class</h3>
       <form class="form-row">
         <label for="recordedClassTitle">Class Title</label>
         <input id="recordedClassTitle" type="text" placeholder="Enter class title" required />
       </form>
       <div class="form-actions">
-        <button onclick="watchRecordedClass()" class="btn btn-primary"><i class="fas fa-play"></i> Watch Now</button>
+        <button onclick="watchRecordedClassModal()" class="btn btn-primary"><i class="fas fa-play"></i> Watch Now</button>
       </div>
     </div>
   </div>
@@ -302,14 +261,14 @@
   <!-- Feedback Modal -->
   <div class="modal" id="modalFeedback">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalFeedback')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('feedback')" title="Close">&times;</span>
       <h3><i class="fas fa-comments"></i> Provide Feedback</h3>
       <form class="form-row">
         <label for="feedbackText">Your Feedback</label>
         <textarea id="feedbackText" placeholder="Share your thoughts, suggestions, or concerns..." required></textarea>
       </form>
       <div class="form-actions">
-        <button onclick="submitFeedback()" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
+        <button onclick="submitFeedbackForm()" class="btn btn-primary"><i class="fas fa-paper-plane"></i> Submit Feedback</button>
       </div>
     </div>
   </div>
@@ -317,7 +276,7 @@
   <!-- Notifications Modal -->
   <div class="modal" id="modalNotifications">
     <div class="modal-content">
-      <span class="close-btn" onclick="closeModal('modalNotifications')" title="Close">&times;</span>
+      <span class="close-btn" onclick="closeModal('notifications')" title="Close">&times;</span>
       <h3><i class="fas fa-bell"></i> Notifications</h3>
       <div style="margin-bottom:10px">
         <input id="m_notifText" placeholder="Add a new notification..." />

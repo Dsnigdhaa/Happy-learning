@@ -204,6 +204,41 @@ header .logo { font-size:28px; color: #fff; }
   background: #008fa1;
 }
 
+/* ========== ATTENDANCE BAR CHART ========== */
+.attendance-bar-container {
+  margin: 20px 0;
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.attendance-bar {
+  display: flex;
+  height: 40px;
+  border-radius: 20px;
+  overflow: hidden;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+
+.attendance-bar .bar {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  font-weight: bold;
+  font-size: 14px;
+  transition: width 0.3s ease;
+}
+
+.attendance-bar .bar.present {
+  background: linear-gradient(90deg, #28a745, #20c997);
+}
+
+.attendance-bar .bar.absent {
+  background: linear-gradient(90deg, #dc3545, #fd7e14);
+}
+
 /* ========== RESPONSIVE ========== */
 @media(max-width:768px){
   .sidebar { transform: translateX(-100%); }
@@ -214,6 +249,13 @@ header .logo { font-size:28px; color: #fff; }
   .recordings-grid {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
     gap: 1rem;
+  }
+  .attendance-bar {
+    height: 60px;
+    flex-direction: column;
+  }
+  .attendance-bar .bar {
+    font-size: 12px;
   }
 }
 

@@ -21,18 +21,18 @@ document.addEventListener('DOMContentLoaded', function() {
 document.getElementById('loginForm').addEventListener('submit', function(e) {
   e.preventDefault();
 
-  const username = document.getElementById('username').value;
-  const password = document.getElementById('password').value;
+  const username = document.getElementById('username').value.trim();
+  const password = document.getElementById('password').value.trim();
 
   // Check all students (admin-added and approved self-registered)
   const allStudents = JSON.parse(localStorage.getItem('students') || '[]');
     const student = allStudents.find(s => {
-    // For students with username (self-registered approved), check username
+    // For students with username (self-registered approved), check username (case insensitive)
     if (s.username) {
-      return s.username === username && s.password === password;
+      return s.username.toLowerCase() === username.toLowerCase() && s.password.toLowerCase() === password.toLowerCase();
     }
-    // For admin-added students, check name (without spaces)
-    return s.name.toLowerCase().replace(/\s+/g, '') === username.toLowerCase() && s.password === password;
+    // For admin-added students, check name (without spaces, case insensitive)
+    return s.name.toLowerCase().replace(/\s+/g, '') === username.toLowerCase() && s.password.toLowerCase() === password.toLowerCase();
   });
 
   if (student) {
@@ -44,5 +44,5 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
   }
 
   // If not found, show invalid credentials message
-  alert('Invalid username or password');
+  alert('Invalid username or password. Please check your credentials and try again.');
 });
