@@ -42,9 +42,11 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        const registeredUser = JSON.parse(localStorage.getItem('newUser'));
-        if (registeredUser && registeredUser.username.toLowerCase() === username && registeredUser.password === password) {
-            console.log('Registered user login successful');
+        // Check registered admins
+        const admins = JSON.parse(localStorage.getItem('admins') || '[]');
+        const admin = admins.find(a => a.username.toLowerCase() === username && a.password === password);
+        if (admin) {
+            console.log('Registered admin login successful');
             localStorage.setItem('adminLoggedIn', 'true');
             localStorage.setItem('adminUsername', username);
             window.location.href = 'admin/dashboard.html';

@@ -21,7 +21,20 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        localStorage.setItem('newUser', JSON.stringify({username, email, password}));
+        // Get existing admins or initialize empty array
+        const admins = JSON.parse(localStorage.getItem('admins') || '[]');
+
+        // Check if username already exists
+        const usernameExists = admins.some(admin => admin.username.toLowerCase() === username.toLowerCase());
+        if (usernameExists) {
+            showError(errorDiv, 'Username already exists. Please choose a different username.');
+            return;
+        }
+
+        // Add new admin
+        admins.push({username, email, password});
+        localStorage.setItem('admins', JSON.stringify(admins));
+
         alert('Account created successfully!');
         window.location.href = 'login.html';
     });

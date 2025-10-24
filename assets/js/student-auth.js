@@ -16,6 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }];
     localStorage.setItem('students', JSON.stringify(allStudents));
   }
+  // Note: Do not overwrite existing students; only initialize if empty
 });
 
 document.getElementById('loginForm').addEventListener('submit', function(e) {

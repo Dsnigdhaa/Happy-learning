@@ -24,22 +24,28 @@ document.addEventListener('DOMContentLoaded', function() {
         const password = passwordInput.value.trim();
         console.log('Trainer Username:', username, 'Password length:', password.length);
 
-        // Demo trainers (in real app, fetch from server or localStorage)
-        const demoTrainers = {
-            'trainer1': 'pass123',
-            'alice': 'alice123',
-            'charlie': 'charlie123',
-            'venkatesh': '1234567'
-        };
+        // Get trainers from localStorage or initialize with demo trainers
+        let trainers = JSON.parse(localStorage.getItem('trainers') || '[]');
+        if (trainers.length === 0) {
+            // Initialize with demo trainers if none exist
+            trainers = [
+                { username: 'trainer1', password: 'pass123' },
+                { username: 'alice', password: 'alice123' },
+                { username: 'charlie', password: 'charlie123' },
+                { username: 'venkatesh', password: '1234567' }
+            ];
+            localStorage.setItem('trainers', JSON.stringify(trainers));
+        }
 
-        console.log('Demo trainer keys:', Object.keys(demoTrainers));
+        console.log('Trainer keys:', trainers.map(t => t.username));
 
         if (!username || !password) {
             showError(errorMessage, 'Please fill in all fields');
             return;
         }
 
-        if (demoTrainers[username] && demoTrainers[username] === password) {
+        const trainer = trainers.find(t => t.username.toLowerCase() === username && t.password === password);
+        if (trainer) {
             console.log('Trainer login successful');
             localStorage.setItem('trainerLoggedIn', 'true');
             localStorage.setItem('trainerUsername', username);
